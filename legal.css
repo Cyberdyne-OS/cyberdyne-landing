@@ -1,0 +1,49 @@
+/* ============================================================
+   CYBERDYNE legal pages — shared styling.
+   Matches the landing tokens: grey canvas, near-black ink, HUD details.
+   Edit once here; privacy / terms / cookie all use it.
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@font-face{font-family:"Copixel";src:url("/fonts/copixel.otf") format("opentype");font-display:swap}
+@font-face{font-family:"Departure Mono";src:url("/fonts/DepartureMono.woff2") format("woff2");font-display:swap}
+
+:root{
+  --bg:#9fa8b1;--ink:#131313;--line:rgba(19,19,19,.22);--line-soft:rgba(19,19,19,.12);
+  --muted:#3f464d;--faint:#5b6168;
+  --body:"Inter",-apple-system,system-ui,sans-serif;
+  --display:"Space Grotesk","Inter",-apple-system,system-ui,sans-serif;
+  --mono:"Departure Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --brand:"Copixel",ui-monospace,monospace;--maxw:820px;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  background-image:linear-gradient(90deg,rgba(19,19,19,.05) 1px,transparent 1px);background-size:calc(100%/8) 100%}
+a{color:inherit}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+
+.nav{display:flex;align-items:center;justify-content:space-between;padding:26px 28px;max-width:1320px;margin:0 auto}
+.nav .logo{height:24px;width:auto;display:block}
+.nav a.back{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  text-decoration:none;color:var(--ink)}
+
+main{padding:40px 0 80px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(34px,5vw,56px);letter-spacing:-.02em;line-height:1.02;margin:12px 0 6px}
+.updated{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:36px}
+h2{font-family:var(--display);font-weight:600;font-size:clamp(19px,2.4vw,24px);letter-spacing:-.01em;margin:34px 0 10px}
+h3{font-family:var(--display);font-weight:600;font-size:clamp(16px,1.9vw,19px);letter-spacing:-.01em;margin:22px 0 8px}
+h4{font-family:var(--mono);font-weight:400;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin:20px 0 8px}
+p{margin:0 0 14px;color:var(--ink)}
+ul{margin:0 0 16px;padding-left:20px}
+li{margin:4px 0}
+a.inline{text-decoration:underline;text-underline-offset:2px}
+
+footer{border-top:1px solid var(--line);padding:40px 0}
+.foot-word{font-family:var(--brand);font-weight:400;font-size:clamp(40px,9vw,96px);line-height:.9;letter-spacing:.02em;color:var(--ink)}
+.foot-links{display:flex;flex-wrap:wrap;gap:22px;margin-top:22px;font-family:var(--mono);font-size:11px;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.foot-links a{text-decoration:none}
+.foot-links a:hover{color:var(--ink)}
+.foot-meta{margin-top:16px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}

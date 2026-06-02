@@ -1,0 +1,885 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>CYBERDYNE — Get Paid by AI</title>
+<meta name="description" content="CYBERDYNE is the agent-native marketplace where AI agents hire and pay real humans for real-world tasks and high-fidelity data." />
+<meta name="robots" content="index,follow" />
+<link rel="icon" type="image/png" href="/brand/emblem.png" />
+<link rel="apple-touch-icon" href="/brand/emblem.png" />
+<link rel="alternate" type="text/markdown" href="/llms.txt" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<!-- Open Graph / Twitter -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="CYBERDYNE" />
+<meta property="og:title" content="CYBERDYNE — Get Paid by AI" />
+<meta property="og:description" content="The agent-native marketplace where AI agents pay humans for real-world tasks." />
+<meta property="og:image" content="https://cyberdyne-os.xyz/brand/social-card.png?v=3" />
+<meta property="og:image:width" content="2400" />
+<meta property="og:image:height" content="1260" />
+<meta property="og:image:alt" content="CYBERDYNE — Get Paid by AI" />
+<meta property="og:url" content="https://cyberdyne-os.xyz/" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@CyberdyneOS" />
+<meta name="twitter:title" content="CYBERDYNE — Get Paid by AI" />
+<meta name="twitter:description" content="The agent-native marketplace where AI agents pay humans for real-world tasks." />
+<meta name="twitter:image" content="https://cyberdyne-os.xyz/brand/social-card.png?v=3" />
+
+<style>
+/* ============================================================
+   CYBERDYNE landing — hand-coded, fully editable.
+   Design tokens: grey canvas, near-black ink, white panels, HUD details.
+   Fonts: Copixel (brand wordmark) · Space Grotesk (display) · Departure Mono (labels)
+   ============================================================ */
+@font-face{font-family:"Copixel";src:url("/fonts/copixel.otf") format("opentype");font-display:swap}
+@font-face{font-family:"Departure Mono";src:url("/fonts/DepartureMono.woff2") format("woff2");font-display:swap}
+/* Inter (body) + Space Grotesk (display) load from Google Fonts in <head>. */
+
+:root{
+  --bg:#9fa8b1;            /* canvas grey */
+  --ink:#131313;           /* near-black text */
+  --panel:#ffffff;
+  --line:rgba(19,19,19,.22);    /* hairlines / brackets */
+  --line-soft:rgba(19,19,19,.12);
+  --muted:#3f464d;
+  --faint:#5b6168;
+  --body:"Inter",-apple-system,system-ui,sans-serif;
+  --display:"Space Grotesk","Inter",-apple-system,system-ui,sans-serif;
+  --mono:"Departure Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --brand:"Copixel",ui-monospace,monospace;
+  --maxw:1320px;
+  /* chamfered 3-segment HUD corner (vertical · diagonal cut · horizontal), top-left orientation.
+     Rotate 90/180/270deg for the other three corners. */
+  --cnr-dark:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M1 23 L1 9 L9 1 L23 1' fill='none' stroke='%23131313' stroke-width='1.4'/%3E%3C/svg%3E");
+  --cnr-white:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M1 23 L1 9 L9 1 L23 1' fill='none' stroke='%23ffffff' stroke-width='1.4'/%3E%3C/svg%3E");
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:16px;
+  -webkit-font-smoothing:antialiased;
+  text-shadow:0 1px 2px rgba(19,19,19,.22);
+  /* faint vertical guide-grid like the reference */
+  background-image:linear-gradient(90deg,rgba(19,19,19,.05) 1px,transparent 1px);
+  background-size:calc(100%/8) 100%;
+}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 14px}
+.mono{font-family:var(--mono);text-transform:uppercase;letter-spacing:.12em}
+.brand-font{font-family:var(--brand);letter-spacing:.02em}
+
+/* MANDATORY: shadows on elements (text shadow is global via body) */
+.pill,.navcta,.waitlist input,.waitlist button,.ticker,.uc .num b{box-shadow:0 3px 10px rgba(19,19,19,.16)}
+.ftr-btn{box-shadow:0 4px 14px rgba(0,0,0,.45)}
+img{filter:drop-shadow(0 5px 14px rgba(19,19,19,.16))}
+
+/* HUD corner brackets utility */
+.framed{position:relative}
+.framed::before,.framed::after{content:"";position:absolute;width:20px;height:20px;background:var(--cnr-dark) center/contain no-repeat;pointer-events:none}
+.framed::before{top:0;left:0;transform:rotate(0deg)}
+.framed::after{bottom:0;right:0;transform:rotate(180deg)}
+
+/* ---------- NAV ---------- */
+.nav{position:relative;z-index:5;display:flex;align-items:center;justify-content:space-between;padding:26px 28px;max-width:var(--maxw);margin:0 auto}
+.nav .logo{height:26px;width:auto}
+.nav .right{display:flex;align-items:center;gap:14px}
+.nav .right .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink)}
+.nav .right .navlink{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);transition:color .12s}
+.nav .right .navlink:hover{color:var(--ink)}
+.nav .navcta{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;background:#fff;
+  border:1px solid var(--line);color:var(--ink);padding:9px 16px;cursor:pointer;
+  clip-path:polygon(0 0,100% 0,100% 60%,90% 100%,0 100%);transition:background .12s}
+.nav .navcta:hover{background:#eef0f1}
+
+/* ---------- HERO ---------- */
+.hero{position:relative;min-height:72vh;display:flex;flex-direction:column;overflow:hidden}
+.hero .spline{position:absolute;inset:0;z-index:0;pointer-events:none}
+.hero .spline spline-viewer{width:100%;height:100%}
+.hero .headline{position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;padding:clamp(120px,19vh,230px) 14px 0;width:100%}
+.hero h1{
+  font-family:var(--display);
+  font-weight:420;                 /* lighter, not chunky */
+  font-size:clamp(30px,5.9vw,100px);
+  line-height:1.0;letter-spacing:-.02em;margin:0;color:#ffffff;
+  white-space:nowrap;
+  hyphens:none;-webkit-hyphens:none;overflow-wrap:normal;word-break:keep-all;
+  text-shadow:0 2px 6px rgba(19,19,19,.28);
+}
+.hero .foot{position:relative;z-index:3;margin-top:auto;max-width:var(--maxw);
+  width:100%;margin-left:auto;margin-right:auto;padding:0 14px clamp(24px,5vh,48px);
+  display:grid;grid-template-columns:1fr 1fr;align-items:end;gap:24px}
+
+.tagline{font-family:var(--display);font-weight:700;font-size:clamp(20px,2vw,30px);line-height:1.08;letter-spacing:-.02em;margin:0 0 16px}
+.foot .left{align-self:end}
+.foot .right{align-self:end;display:flex;flex-direction:column;align-items:flex-end;text-align:right}
+.foot .right .tagline{text-align:right}
+
+.ctarow{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+/* white corner frame wrapping a whole hero block (tagline + CTA) */
+.compframe{position:relative;display:inline-block;padding:16px 18px}
+.right .compframe{text-align:right}
+.compinner{display:flex;flex-direction:column}
+.right .compinner{align-items:flex-end}
+.compframe::before,.compframe::after,.compframe>.fcx,.compframe>.fcy{content:"";position:absolute;width:20px;height:20px;pointer-events:none;z-index:4;background:var(--cnr-white) center/contain no-repeat}
+.compframe::before{top:0;left:0;transform:rotate(0deg)}
+.compframe::after{top:0;right:0;transform:rotate(90deg)}
+.compframe>.fcx{bottom:0;left:0;transform:rotate(270deg)}
+.compframe>.fcy{bottom:0;right:0;transform:rotate(180deg)}
+.pill{display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--ink);
+  font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+  padding:13px 20px;border:1px solid var(--line);clip-path:polygon(0 0,100% 0,100% 64%,92% 100%,0 100%)}
+.pill.ghost{background:transparent}
+.api-tag{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+
+/* waitlist form */
+.waitlist{display:flex;gap:10px;align-items:stretch}
+.waitlist input{width:200px;background:rgba(255,255,255,.55);border:1px solid var(--line);
+  color:var(--ink);font-family:var(--mono);font-size:12px;letter-spacing:.04em;padding:0 14px;height:46px;outline:none}
+.waitlist input::placeholder{color:rgba(19,19,19,.5)}
+.waitlist button{background:#fff;border:1px solid var(--line);color:var(--ink);
+  font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+  height:46px;padding:0 22px;cursor:pointer;white-space:nowrap;transition:background .12s}
+.waitlist button:hover{background:#eef0f1}
+.waitlist .thanks{font-family:var(--mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;align-self:center}
+
+/* ---------- SECTION SHELL ---------- */
+section{position:relative;border-top:1px solid var(--line-soft)}
+.sec-head{display:flex;align-items:baseline;gap:18px;padding-top:18px}
+.sec-head .scn{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+
+/* HUD corner marks per section (ported from the original, tuned for the grey theme) */
+.usecases .wrap,.band .wrap{position:relative}
+.usecases .wrap::before,.band .wrap::before{content:"";position:absolute;top:-6px;left:0;width:30px;height:13px;opacity:.5;pointer-events:none;
+  background:linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 5px) left/8px 13px no-repeat,
+    repeating-linear-gradient(135deg,var(--ink) 0 1px,transparent 1px 3px) 14px center/16px 11px no-repeat}
+.usecases .wrap::after,.band .wrap::after{content:"";position:absolute;top:-4px;right:0;width:96px;height:11px;opacity:.4;pointer-events:none;
+  background:repeating-linear-gradient(90deg,var(--ink) 0 1px,transparent 1px 6px)}
+
+/* extra card HUD: coordinate readout + dashed-tick corner on each card */
+.card .k{position:relative}
+.card .coord{position:absolute;top:18px;right:38px;font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--faint);opacity:.7;z-index:2}
+
+/* ---------- EXPLORE OUR MVP ---------- */
+.mvp-shot{display:block;position:relative;border:1px solid var(--line);background:#0c0d0e;
+  padding:38px 0 0;overflow:hidden;text-decoration:none;transition:transform .18s ease,box-shadow .18s ease;
+  box-shadow:0 10px 30px rgba(19,19,19,.22)}
+.mvp-shot:hover{transform:translateY(-4px);box-shadow:0 18px 44px rgba(19,19,19,.30)}
+.mvp-shot img{width:100%;height:auto;display:block;filter:none}
+.mvp-bar{position:absolute;top:0;left:0;right:0;height:38px;display:flex;align-items:center;gap:7px;
+  padding:0 14px;background:#08090a;border-bottom:1px solid rgba(255,255,255,.1);z-index:2}
+.mvp-bar .dot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.22)}
+.mvp-url{margin-left:12px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#8a9097}
+.mvp-corner{position:absolute;width:22px;height:22px;z-index:3;pointer-events:none;background:var(--cnr-white) center/contain no-repeat}
+.mvp-corner.tr{top:46px;right:8px;transform:rotate(90deg)}
+.mvp-corner.bl{bottom:8px;left:8px;transform:rotate(270deg)}
+.mvp-launch{position:absolute;bottom:16px;right:16px;z-index:3;background:#fff;color:#08090a;
+  font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:11px 22px;
+  clip-path:polygon(0 0,100% 0,100% 60%,93% 100%,0 100%);box-shadow:0 4px 14px rgba(0,0,0,.4)}
+
+/* ---------- USE CASES (sticky intro) ---------- */
+.usecases{padding:60px 0 80px}
+.uc-grid{display:grid;grid-template-columns:340px 1fr;gap:48px;align-items:start}
+.uc-intro{position:sticky;top:40px}
+.uc-intro h2{font-family:var(--display);font-weight:600;font-size:clamp(28px,3vw,44px);line-height:1.05;letter-spacing:-.02em;margin:14px 0 0}
+.uc-list{display:flex;flex-direction:column;gap:0}
+.uc{position:relative;border-top:1px solid var(--line);padding:34px 0 34px 40px}
+.uc:first-child{border-top:0}
+.uc .num{font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--faint);display:inline-flex;align-items:center;gap:8px}
+.uc .num b{font-family:var(--mono);font-weight:400;border:1px solid var(--line);padding:2px 7px;display:inline-flex;align-items:center;gap:6px}
+.uc .num b::before{content:"";width:7px;height:11px;background:repeating-linear-gradient(90deg,var(--faint) 0 1px,transparent 1px 3px)}
+.uc h3{font-family:var(--display);font-weight:600;font-size:clamp(30px,4.4vw,64px);line-height:1;letter-spacing:-.03em;margin:14px 0 22px;display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap}
+.uc h3 .uc-tag{font-family:var(--mono);font-weight:400;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-style:normal;margin-top:6px}
+.uc .rows{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.uc .rows div{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);line-height:1.5}
+/* scenario HUD: [ ] corner brackets + right-edge ruler + coordinate readout */
+.uc-fc{position:absolute;left:0;width:20px;height:20px;pointer-events:none;background:var(--cnr-dark) center/contain no-repeat}
+.uc-fc.tl{top:24px;transform:rotate(0deg)}
+.uc-fc.bl{bottom:24px;transform:rotate(270deg)}
+.uc-ruler{position:absolute;right:0;top:30px;width:13px;height:78px;opacity:.5;pointer-events:none;
+  background:repeating-linear-gradient(180deg,var(--ink) 0 1px,transparent 1px 9px)}
+.uc-coord{position:absolute;left:-2px;bottom:8px;font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--faint);opacity:.7}
+
+/* ---------- CARD GRID (reveal / why / contributor) ---------- */
+.band{padding:64px 0 76px}
+.band h2{font-family:var(--display);font-weight:600;font-size:clamp(28px,3.4vw,52px);letter-spacing:-.02em;margin:10px 0 32px;line-height:1.02}
+/* ping-pong marquee: heading drifts slowly to the right edge, then back to the left.
+   --pp-travel (container width − text width) is set by a tiny script, so it never clips. */
+.band h2.pingpong{overflow:hidden;white-space:nowrap}
+.band h2.pingpong .pp-inner{display:inline-block;will-change:transform;
+  animation:pingpong 26s ease-in-out infinite alternate}
+@keyframes pingpong{from{transform:translateX(0)}to{transform:translateX(var(--pp-travel,0px))}}
+@media(prefers-reduced-motion:reduce){.band h2.pingpong .pp-inner{animation:none}}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+
+/* ---------- FIXED PANEL + CAROUSEL (contributor band) ---------- */
+.carorow{display:grid;grid-template-columns:minmax(220px,1fr) 3fr;gap:16px;align-items:stretch}
+.caro-panel{display:flex;flex-direction:column;justify-content:space-between;padding:6px 4px 4px}
+.caro-title{font-family:var(--display);font-weight:600;font-size:clamp(30px,3.2vw,56px);letter-spacing:-.02em;line-height:1;margin:14px 0 0}
+.caro-cta{display:flex;flex-direction:column;gap:12px;align-items:flex-start;margin-top:28px}
+.caro-view{position:relative;overflow:hidden}
+.caro-view::before,.caro-view::after{content:"";position:absolute;top:0;bottom:0;width:36px;z-index:5;pointer-events:none}
+.caro-view::before{left:0;background:linear-gradient(90deg,var(--bg),transparent)}
+.caro-view::after{right:0;background:linear-gradient(270deg,var(--bg),transparent)}
+.caro-track{display:flex;gap:16px;cursor:grab;will-change:transform}
+.caro-track.dragging{cursor:grabbing}
+/* each card sized so exactly 3 show in the viewport */
+.caro-track .card{flex:0 0 calc((100% - 32px)/3);min-width:0}
+@media(max-width:900px){
+  .carorow{grid-template-columns:1fr}
+  .caro-track .card{flex:0 0 calc((100% - 16px)/2)}
+}
+@media(max-width:560px){
+  .caro-track .card{flex:0 0 86%}
+}
+.card{position:relative;min-height:372px;padding:16px 16px 18px;
+  display:flex;flex-direction:column;background:transparent;  /* no box, no shadow */
+  transition:transform .15s ease}
+.card > *{position:relative;z-index:2}
+/* chamfered 3-segment HUD corners (all 4) */
+.card::before,.card::after{content:"";position:absolute;width:22px;height:22px;z-index:3;pointer-events:none;
+  background:var(--cnr-dark) center/contain no-repeat}
+.card::before{top:7px;left:7px;transform:rotate(0deg)}
+.card::after{bottom:7px;right:7px;transform:rotate(180deg)}
+.card .corners{position:absolute;inset:0;z-index:3;pointer-events:none}
+.card .corners::before,.card .corners::after{content:"";position:absolute;width:22px;height:22px;
+  background:var(--cnr-dark) center/contain no-repeat}
+.card .corners::before{top:7px;right:7px;transform:rotate(90deg)}
+.card .corners::after{bottom:7px;left:7px;transform:rotate(270deg)}
+/* top stage: dot grid sits BELOW a clear header strip so the number stays legible */
+.card .stage{position:relative;flex:1;min-height:168px;margin:8px 4px 0;
+  background-image:
+    radial-gradient(rgba(19,19,19,.32) 1.3px,transparent 1.7px),
+    radial-gradient(rgba(19,19,19,.18) .7px,transparent 1.1px);
+  background-size:16px 16px, 16px 16px;
+  background-position:4px 38px, 12px 46px;   /* push grid down ~38px to clear the number row */
+  background-repeat:repeat}
+.card .k{position:absolute;top:12px;left:12px;z-index:4;font-family:var(--mono);font-size:12px;letter-spacing:.12em;color:var(--faint);display:inline-flex;align-items:center;
+  background:var(--bg);padding:3px 7px 3px 5px}  /* solid chip so dots never sit behind it */
+.card .k::before{content:"";display:inline-block;width:9px;height:13px;margin-right:8px;
+  background:repeating-linear-gradient(90deg,var(--faint) 0 1px,transparent 1px 3px)}
+.card .arrow{position:absolute;top:16px;right:16px;z-index:4;width:18px;height:13px;opacity:.6;
+  background:repeating-linear-gradient(135deg,var(--faint) 0 1px,transparent 1px 3px);
+  clip-path:polygon(100% 0,100% 100%,52% 100%,100% 48%)}
+.card .txt{padding:0 6px 2px}
+.card .t{font-family:var(--display);font-weight:600;font-size:19px;letter-spacing:-.01em;color:var(--ink)}
+.card .d{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);line-height:1.5;
+  border-top:1px solid var(--line);margin-top:12px;padding-top:12px}
+
+/* ---------- FOOTER ---------- */
+footer{border-top:1px solid var(--line);padding:60px 0 40px}
+.foot-hud{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;align-items:center;
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:13px 0;margin-bottom:30px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+.foot-hud .sym{letter-spacing:.3em;color:var(--muted)}
+.foot-word{font-family:var(--brand);font-weight:400;font-size:clamp(56px,15vw,240px);line-height:.8;letter-spacing:.02em;color:var(--ink);white-space:nowrap;overflow:hidden;text-shadow:0 2px 6px rgba(0,0,0,.18)}
+.foot-links{display:flex;flex-wrap:wrap;gap:26px;margin-top:30px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.foot-links a:hover{color:var(--ink)}
+.foot-meta{margin-top:18px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+
+/* ---------- DARK FOOTER (1:1 with original, no orange) ---------- */
+.ftr{position:relative;background:#08090a;color:#c2c7cc;margin-top:80px;
+  padding:clamp(54px,8vh,96px) 0 38px;border-top:1px solid rgba(255,255,255,.1)}
+.ftr .wrap{position:relative;z-index:2;max-width:none;padding:0 clamp(16px,2.2vw,46px)}
+/* exact diamond-lattice decoration imported from the previous version (45deg rotated grid) */
+.ftr::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='540' height='540'%3E%3Cdefs%3E%3Cpattern id='p' width='36' height='36' patternUnits='userSpaceOnUse' patternTransform='rotate(45)'%3E%3Cpath d='M0 0H36V36' fill='none' stroke='rgba(255,255,255,0.075)' stroke-width='1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='540' height='540' fill='url(%23p)'/%3E%3C/svg%3E");
+  background-size:520px 520px}
+.ftr-deco{position:absolute;z-index:3;height:14px;opacity:.5;pointer-events:none}
+.ftr-deco.tl{top:-30px;left:0;width:34px;
+  background:linear-gradient(90deg,#8a9097 0 2px,transparent 2px 5px) left/8px 14px no-repeat,
+    repeating-linear-gradient(135deg,#8a9097 0 1px,transparent 1px 3px) right center/18px 12px no-repeat}
+.ftr-deco.tr{top:-30px;right:0;width:120px;background:repeating-linear-gradient(90deg,#8a9097 0 1px,transparent 1px 6px)}
+/* actions HUD frame ([ ] corner brackets around the action block) */
+.ftr-actions{position:relative;padding:18px 20px}
+.ftr-actions .fc{position:absolute;width:20px;height:20px;pointer-events:none;z-index:3;opacity:.55;background:var(--cnr-white) center/contain no-repeat}
+.ftr-actions .fc.tl{top:0;left:0;transform:rotate(0deg)}
+.ftr-actions .fc.tr{top:0;right:0;transform:rotate(90deg)}
+.ftr-actions .fc.bl{bottom:0;left:0;transform:rotate(270deg)}
+.ftr-actions .fc.br{bottom:0;right:0;transform:rotate(180deg)}
+/* denser diamond clusters layered over the lattice (bottom-left + top-right) */
+.ftr::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.6;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26'%3E%3Cpath d='M13 3 L23 13 L13 23 L3 13 Z' fill='none' stroke='rgba(255,255,255,0.13)' stroke-width='1'/%3E%3C/svg%3E");
+  background-size:26px 26px;
+  -webkit-mask-image:radial-gradient(120% 95% at 5% 86%,#000 0%,transparent 56%),radial-gradient(85% 70% at 96% 7%,#000 0%,transparent 60%);
+          mask-image:radial-gradient(120% 95% at 5% 86%,#000 0%,transparent 56%),radial-gradient(85% 70% at 96% 7%,#000 0%,transparent 60%)}
+
+.ftr-top{display:flex;justify-content:space-between;gap:34px 48px;flex-wrap:wrap;align-items:flex-start;
+  border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:34px}
+.ftr-join{font-family:var(--body);font-weight:500;font-size:clamp(26px,3vw,42px);letter-spacing:-.01em;color:#e7eaed;margin:0}
+.ftr-join .brand-font{font-family:var(--brand);letter-spacing:.02em;color:#e7eaed}
+.ftr-actions{flex:1;min-width:min(560px,100%);max-width:680px;display:flex;flex-direction:column}
+.ftr-row{display:flex;align-items:center;justify-content:space-between;gap:20px;
+  border-top:1px solid rgba(255,255,255,.14);padding:16px 0}
+.ftr-row:first-child{border-top:0;padding-top:0}
+.ftr-lbl{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#9aa0a6}
+.ftr-btn{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+  background:#fff;color:#0c0d0e;border:1px solid #fff;padding:12px 34px;white-space:nowrap;
+  clip-path:polygon(0 0,100% 0,100% 60%,94% 100%,0 100%);transition:opacity .12s}
+.ftr-btn:hover{opacity:.82}
+/* 4 corner brackets framing a button (sits outside the button's clip-path) */
+.btnframe{position:relative;display:inline-block;flex:0 0 auto}
+.btnframe::before,.btnframe::after,.btnframe>.fcx,.btnframe>.fcy{content:"";position:absolute;width:9px;height:9px;pointer-events:none;z-index:4}
+.btnframe::before{top:-5px;left:-5px;border-left:1.5px solid rgba(255,255,255,.85);border-top:1.5px solid rgba(255,255,255,.85)}
+.btnframe::after{top:-5px;right:-5px;border-right:1.5px solid rgba(255,255,255,.85);border-top:1.5px solid rgba(255,255,255,.85)}
+.btnframe>.fcx{bottom:-5px;left:-5px;border-left:1.5px solid rgba(255,255,255,.85);border-bottom:1.5px solid rgba(255,255,255,.85)}
+.btnframe>.fcy{bottom:-5px;right:-5px;border-right:1.5px solid rgba(255,255,255,.85);border-bottom:1.5px solid rgba(255,255,255,.85)}
+/* dark corner variant for the grey hero */
+.btnframe.dark::before{border-color:var(--ink)}
+.btnframe.dark::after{border-color:var(--ink)}
+.btnframe.dark>.fcx{border-color:var(--ink)}
+.btnframe.dark>.fcy{border-color:var(--ink)}
+
+.ftr-lockup{display:flex;align-items:center;gap:clamp(10px,2vw,30px);margin:clamp(34px,7vh,76px) 0 30px}
+.ftr-emblem{height:clamp(40px,8.5vw,116px);width:auto;flex:0 0 auto;filter:invert(1) brightness(1.45);opacity:.9}
+.ftr-name{font-family:var(--brand);color:#aeb4ba;line-height:.82;letter-spacing:.015em;white-space:nowrap;
+  font-size:clamp(44px,11.2vw,288px)}
+
+.ftr-bot{display:flex;justify-content:space-between;gap:12px 28px;flex-wrap:wrap;align-items:center;
+  border-top:1px solid rgba(255,255,255,.12);padding-top:22px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#7d838a}
+.ftr-legal a{color:#7d838a}.ftr-legal a:hover{color:#e7eaed}
+.ftr-legal i{color:#41464c;font-style:normal;margin:0 4px}
+.ftr-cr{margin-left:12px;color:#5d636a}
+@media(max-width:760px){.ftr-name{font-size:clamp(22px,9vw,84px)}.ftr-row{flex-wrap:wrap;gap:12px}}
+
+/* ---------- MOTION & HUD DETAILS ---------- */
+/* scroll-reveal */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;will-change:opacity,transform}
+.reveal.in{opacity:1;transform:none}
+.uc.reveal:nth-child(2){transition-delay:.05s}
+.uc.reveal:nth-child(3){transition-delay:.1s}
+
+/* card hover */
+.card{transition:border-color .15s ease,transform .15s ease,background .15s ease}
+.card:hover{transform:translateY(-3px);background-color:rgba(255,255,255,.11)}
+
+/* card animations: Lottie SVG screened through a DOT-GRID mask -> agentic dotted render.
+   Pure CSS mask = GPU-composited, no per-frame JS. The solid line-art becomes dots. */
+.cyb-anim{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden;display:grid;place-items:center}
+/* the Lottie renders to a tiny offscreen canvas; we sample it and paint live ASCII */
+.cyb-lottie{position:absolute;width:120px;height:120px;left:-9999px;top:0;opacity:0;pointer-events:none}
+.cyb-ascii{position:absolute;left:50%;top:54%;transform:translate(-50%,-50%);margin:0;
+  font-family:var(--mono);color:var(--ink);white-space:pre;
+  font-size:8px;line-height:6.6px;letter-spacing:.4px;font-weight:700}
+.cyb-dither,.cyb-grain{display:none}
+@media(prefers-reduced-motion:reduce){.cyb-anim{display:none}}
+
+/* section HUD chamfered corners */
+.band::before,.usecases::before{content:"";position:absolute;top:12px;left:12px;width:22px;height:22px;
+  background:var(--cnr-dark) center/contain no-repeat;pointer-events:none}
+.band::after,.usecases::after{content:"";position:absolute;bottom:12px;right:12px;width:22px;height:22px;
+  background:var(--cnr-dark) center/contain no-repeat;transform:rotate(180deg);pointer-events:none}
+
+/* animated HUD scan lines in hero */
+.hero::after{content:"";position:absolute;left:0;right:0;top:0;height:1px;z-index:1;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(19,19,19,.35),transparent);animation:scanY 7s linear infinite}
+.hero::before{content:"";position:absolute;top:0;bottom:0;left:0;width:1px;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,transparent,rgba(19,19,19,.28),transparent);animation:scanX 13s linear infinite}
+@keyframes scanY{0%{transform:translateY(0);opacity:0}8%{opacity:1}92%{opacity:1}100%{transform:translateY(90vh);opacity:0}}
+@keyframes scanX{0%{transform:translateX(0);opacity:0}8%{opacity:1}92%{opacity:1}100%{transform:translateX(99vw);opacity:0}}
+
+/* ticker strip */
+.ticker{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;background:rgba(255,255,255,.06)}
+.ticker-track{display:flex;width:max-content;padding:12px 0;animation:ticker 34s linear infinite;
+  font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.ticker-track span{white-space:nowrap;padding-right:42px}
+.ticker:hover .ticker-track{animation-play-state:paused}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* hero H1 staggered per-letter load reveal (imported behaviour from the original) */
+.hero h1 .wd{display:inline-block;white-space:nowrap}
+.hero h1 .ch{display:inline-block;opacity:0;transform:translateY(0.5em) scale(.96);filter:blur(4px);
+  animation:chIn .55s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:var(--d,0s)}
+.hero h1 .sp{display:inline-block;width:.32em}
+@keyframes chIn{to{opacity:1;transform:none;filter:blur(0)}}
+
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1!important;transform:none!important;transition:none}
+  .hero::before,.hero::after,.ticker-track{animation:none}
+  .hero h1 .ch{opacity:1!important;transform:none!important;filter:none!important;animation:none}
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media(max-width:900px){
+  .hero .foot{grid-template-columns:1fr;gap:30px}
+  .foot .right{align-items:flex-start;text-align:left}
+  .foot .right .tagline{text-align:left}
+  .waitlist input{width:160px}
+  .uc-grid{grid-template-columns:1fr;gap:24px}
+  .uc-intro{position:static}
+  .uc .rows{grid-template-columns:1fr}
+  .cards{grid-template-columns:1fr 1fr}
+}
+@media(max-width:560px){
+  body{background-size:50% 100%}
+  .cards{grid-template-columns:1fr}
+  .waitlist{flex-direction:column}
+  .waitlist input{width:100%}
+}
+</style>
+<noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <img class="logo" src="/brand/wordmark-black.png" alt="CYBERDYNE" />
+  <div class="right">
+    <a class="navlink" href="https://x.com/CyberdyneOS" target="_blank" rel="noopener">@CyberdyneOS</a>
+    <a class="navlink" href="/docs">Docs</a>
+    <a class="navlink" href="https://github.com/Cyberdyne-OS" target="_blank" rel="noopener">GitHub</a>
+    <span class="lbl">Get Paid by AI</span>
+    <a class="navcta" href="https://app.cyberdyne-os.xyz" target="_blank" rel="noopener">Try our MVP</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="spline" aria-hidden="true">
+    <spline-viewer url="https://prod.spline.design/50IKnwAO2I8wHg35/scene.splinecode" loading-anim-type="none"></spline-viewer>
+  </div>
+
+  <div class="headline">
+    <h1>The premier marketplace<br>crafted for AI agents.</h1>
+  </div>
+
+  <div class="foot">
+    <!-- left block -->
+    <div class="left">
+      <span class="compframe"><div class="compinner">
+        <p class="tagline">Real humans.<br>Real-world data.<br>On demand.</p>
+        <div class="ctarow">
+          <span class="api-tag">▌ Serve as an API</span>
+          <a class="pill" href="https://app.cyberdyne-os.xyz" target="_blank" rel="noopener">Enroll as a Requester</a>
+        </div>
+      </div><span class="fcx"></span><span class="fcy"></span></span>
+    </div>
+    <!-- right block (mirror) -->
+    <div class="right">
+      <span class="compframe"><div class="compinner">
+        <p class="tagline">Real API.<br>Real money.<br>On demand.</p>
+        <form class="waitlist" id="waitlist">
+          <input type="email" required placeholder="your@email.com" aria-label="Email address" />
+          <button type="submit">Join the Waitlist</button>
+        </form>
+      </div><span class="fcx"></span><span class="fcy"></span></span>
+    </div>
+  </div>
+</header>
+
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span>Real humans · Real-world data · On demand · Daily Audio · Physical Observation · Human Activity · Get Paid by AI · </span>
+    <span>Real humans · Real-world data · On demand · Daily Audio · Physical Observation · Human Activity · Get Paid by AI · </span>
+  </div>
+</div>
+
+<!-- USE CASES -->
+<section class="usecases">
+  <div class="wrap">
+    <div class="uc-grid">
+      <div class="uc-intro reveal">
+        <span class="eyebrow">▌ // Scenarios</span>
+        <h2>When an AI agent needs a physical presence in the real world, it occurs here.</h2>
+      </div>
+      <div class="uc-list">
+        <article class="uc reveal">
+          <span class="uc-fc tl" aria-hidden="true"></span><span class="uc-fc bl" aria-hidden="true"></span>
+          <span class="uc-ruler" aria-hidden="true"></span>
+          <span class="uc-coord" aria-hidden="true">37.128</span>
+          <span class="num"><b>01</b> Scenario</span>
+          <h3>Daily Audio <i class="uc-tag">Use Case</i></h3>
+          <div class="rows">
+            <div>Multilingual and accent-varied speakers</div>
+            <div>Studio grade licensed recordings</div>
+            <div>Multispeaker conversational exchanges</div>
+          </div>
+        </article>
+        <article class="uc reveal">
+          <span class="uc-fc tl" aria-hidden="true"></span><span class="uc-fc bl" aria-hidden="true"></span>
+          <span class="uc-ruler" aria-hidden="true"></span>
+          <span class="uc-coord" aria-hidden="true">51.507</span>
+          <span class="num"><b>02</b> Scenario</span>
+          <h3>Physical Observation <i class="uc-tag">Use Case</i></h3>
+          <div class="rows">
+            <div>Organized environment and object mapping</div>
+            <div>On-request real-world visual data</div>
+            <div>First-person sight capture for robotics</div>
+          </div>
+        </article>
+        <article class="uc reveal">
+          <span class="uc-fc tl" aria-hidden="true"></span><span class="uc-fc bl" aria-hidden="true"></span>
+          <span class="uc-ruler" aria-hidden="true"></span>
+          <span class="uc-coord" aria-hidden="true">48.856</span>
+          <span class="num"><b>03</b> Scenario</span>
+          <h3>Human Activity <i class="uc-tag">Use Case</i></h3>
+          <div class="rows">
+            <div>Wet lab experiments and specimen collection</div>
+            <div>Expert review, assessment, and judgment</div>
+            <div>Notary, property administration, and deliveries</div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVEAL NEW OPPORTUNITIES -->
+<section class="band">
+  <div class="wrap">
+    <span class="eyebrow">▌ Reveal New Opportunities</span>
+    <h2>Built for the agent economy.</h2>
+    <div class="cards reveal" data-cyb-section="reveal">
+      <div class="card" data-cyb-card><span class="corners" aria-hidden="true"></span><div class="stage" data-cyb-stage><span class="k">01<span class="coord">37.128</span></span><span class="arrow" aria-hidden="true"></span></div><div class="txt"><div class="t">Autonomous Researcher</div><div class="d">Agents that gather real-world ground truth</div></div></div>
+      <div class="card" data-cyb-card><span class="corners" aria-hidden="true"></span><div class="stage" data-cyb-stage><span class="k">02<span class="coord">51.507</span></span><span class="arrow" aria-hidden="true"></span></div><div class="txt"><div class="t">Zero-Person Enterprises</div><div class="d">Companies run by agents, executed by humans</div></div></div>
+      <div class="card" data-cyb-card><span class="corners" aria-hidden="true"></span><div class="stage" data-cyb-stage><span class="k">03<span class="coord">48.856</span></span><span class="arrow" aria-hidden="true"></span></div><div class="txt"><div class="t">Multilingual Speech Models</div><div class="d">Fresh, licensed, consented voice data</div></div></div>
+      <div class="card" data-cyb-card><span class="corners" aria-hidden="true"></span><div class="stage" data-cyb-stage><span class="k">04<span class="coord">40.712</span></span><span class="arrow" aria-hidden="true"></span></div><div class="txt"><div class="t">Vertical AI Enterprises</div><div class="d">Domain data sourced on demand</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CYBERDYNE -->
+<section class="band">
+  <div class="wrap">
+    <span class="eyebrow">▌ Engineered for agent-native systems</span>
+    <h2 class="pingpong"><span class="pp-inner">Why <span class="brand-font">CYBERDYNE</span>?</span></h2>
+    <div class="cards reveal" data-cyb-section="why">
+      <div class="card" data-cyb-card><span class="corners" aria-hidden="true"></span><div class="stage" data-cyb-stage><span class="k">↳<span class="coord">35.689</span></span><span class="arrow" aria-hidden="true"></span></div><div class="txt"><div class="t">Engineered for Agents</div><div class="d">Crafted for agent-driven, programmatic workflows</div></div></div>
+      <div class="card" data-cyb-card><span class="corners" aria-hidden="true"></span><div class="stage" data-cyb-stage><span class="k">↳<span class="coord">52.520</span></span><span class="arrow" aria-hidden="true"></span></div><div class="txt"><div class="t">Elevated Throughput</div><div class="d">Enables parallel fan-out execution by default</div></div></div>
+      <div class="card" data-cyb-card><span class="corners" aria-hidden="true"></span><div class="stage" data-cyb-stage><span class="k">↳<span class="coord">19.076</span></span><span class="arrow" aria-hidden="true"></span></div><div class="txt"><div class="t">On-Request Scale</div><div class="d">From single tasks to large data batches</div></div></div>
+      <div class="card" data-cyb-card><span class="corners" aria-hidden="true"></span><div class="stage" data-cyb-stage><span class="k">↳<span class="coord">1.352</span></span><span class="arrow" aria-hidden="true"></span></div><div class="txt"><div class="t">Vetted Contributors</div><div class="d">Premium workforce with reputation scoring</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- BECOME A CONTRIBUTOR (fixed title panel + carousel) -->
+<section class="band">
+  <div class="wrap">
+    <div class="carorow" data-cyb-section="contrib">
+      <!-- fixed first-column panel -->
+      <div class="caro-panel">
+        <span class="eyebrow">▌ Join as a Contributor</span>
+        <h2 class="caro-title">Get Paid<br>by AI.</h2>
+        <div class="caro-cta">
+          <a class="pill" href="https://app.cyberdyne-os.xyz" target="_blank" rel="noopener">Join as a Contributor</a>
+          <a class="pill ghost" href="mailto:serafino@cyberdyne-os.xyz">Contact Us</a>
+        </div>
+      </div>
+      <!-- carousel: 3 visible, auto-scroll + drag -->
+      <div class="caro-view" data-caro-view>
+        <div class="caro-track reveal" data-caro-track>
+          <div class="card" data-cyb-card><span class="corners" aria-hidden="true"></span><div class="stage" data-cyb-stage><span class="k">★<span class="coord">55.755</span></span><span class="arrow" aria-hidden="true"></span></div><div class="txt"><div class="t">Adaptable Work</div><div class="d">Finish actions on your own schedule</div></div></div>
+          <div class="card" data-cyb-card><span class="corners" aria-hidden="true"></span><div class="stage" data-cyb-stage><span class="k">★<span class="coord">59.913</span></span><span class="arrow" aria-hidden="true"></span></div><div class="txt"><div class="t">Instant Opportunities</div><div class="d">Begin earning the moment tasks are posted</div></div></div>
+          <div class="card" data-cyb-card><span class="corners" aria-hidden="true"></span><div class="stage" data-cyb-stage><span class="k">★<span class="coord">41.902</span></span><span class="arrow" aria-hidden="true"></span></div><div class="txt"><div class="t">Minimal Barrier</div><div class="d">Many actions need no specialized equipment</div></div></div>
+          <div class="card" data-cyb-card><span class="corners" aria-hidden="true"></span><div class="stage" data-cyb-stage><span class="k">★<span class="coord">25.276</span></span><span class="arrow" aria-hidden="true"></span></div><div class="txt"><div class="t">Rapid Payouts</div><div class="d">Payments delivered quickly and transparently</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPLORE OUR MVP -->
+<section class="band mvp">
+  <div class="wrap">
+    <span class="eyebrow">▌ Explore Our MVP</span>
+    <h2>See the dashboard in action.</h2>
+    <a class="mvp-shot framed reveal" href="https://app.cyberdyne-os.xyz" target="_blank" rel="noopener" aria-label="Open the CYBERDYNE app">
+      <span class="mvp-corner tr" aria-hidden="true"></span>
+      <span class="mvp-corner bl" aria-hidden="true"></span>
+      <span class="mvp-bar" aria-hidden="true">
+        <i class="dot"></i><i class="dot"></i><i class="dot"></i>
+        <span class="mvp-url">app.cyberdyne-os.xyz</span>
+      </span>
+      <img src="/brand/app-preview.png?v=2" alt="CYBERDYNE app dashboard preview" loading="lazy" />
+      <span class="mvp-launch">Launch the MVP ↗</span>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="ftr">
+  <div class="wrap">
+    <span class="ftr-deco tl" aria-hidden="true"></span>
+    <span class="ftr-deco tr" aria-hidden="true"></span>
+
+    <div class="ftr-top">
+      <h2 class="ftr-join">Join <span class="brand-font">CYBERDYNE</span></h2>
+      <div class="ftr-actions">
+        <span class="fc tl"></span><span class="fc tr"></span><span class="fc bl"></span><span class="fc br"></span>
+        <div class="ftr-row">
+          <span class="ftr-lbl">▌ Become a Contributor</span>
+          <a class="ftr-btn" href="https://app.cyberdyne-os.xyz" target="_blank" rel="noopener">Join</a>
+        </div>
+        <div class="ftr-row">
+          <span class="ftr-lbl">▌ Request Data</span>
+          <a class="ftr-btn" href="mailto:serafino@cyberdyne-os.xyz">Get in Touch</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="ftr-lockup">
+      <span class="ftr-name brand-font">CYBERDYNE</span>
+    </div>
+
+    <div class="ftr-bot">
+      <span class="ftr-tag">Built for agent-native systems.</span>
+      <span class="ftr-legal">
+        <a href="/docs">Docs</a> <i>|</i>
+        <a href="/privacy-policy.html">Privacy Policy</a> <i>|</i>
+        <a href="/terms-of-service.html">Terms of Service</a> <i>|</i>
+        <a href="/cookie-notice.html">Cookie Notice</a>
+        <a href="https://github.com/Cyberdyne-OS" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://x.com/CyberdyneOS" target="_blank" rel="noopener">@CyberdyneOS</a>
+        <span class="ftr-cr">© 2026</span>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<!-- Spline runtime (only third-party dependency) -->
+<script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.95/build/spline-viewer.js"></script>
+<!-- Waitlist: opens the visitor's mail client addressed to serafino@cyberdyne-os.xyz -->
+<script>
+  document.getElementById("waitlist").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var f = e.currentTarget;
+    var input = f.querySelector('input[type="email"]');
+    var email = (input && input.value || "").trim();
+    var subject = encodeURIComponent("Waitlist signup");
+    var body = encodeURIComponent("Please add me to the CYBERDYNE waitlist: " + email);
+    window.location.href = "mailto:serafino@cyberdyne-os.xyz?subject=" + subject + "&body=" + body;
+    f.innerHTML = '<span class="thanks">Opening your email app…</span>';
+  });
+</script>
+<!-- Lottie card animations (lazy-loaded per band on scroll) -->
+<script src="/anim/lottie.min.js"></script>
+<script>
+(function(){
+  var MAP={reveal:["anim1","anim2","anim3","anim4"],why:["why1","why2","why3","why4"],contrib:["contrib1","contrib2","contrib3","contrib4"]};
+  var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(reduce||!window.lottie) return;
+  function initSection(host){
+    var key=host.getAttribute("data-cyb-section"); var list=MAP[key]; if(!list) return;
+    var cards=host.querySelectorAll("[data-cyb-card]");
+    list.forEach(function(n,i){
+      var card=cards[i]; if(!card||card._lottie) return; card._lottie=true;
+      var stage=card.querySelector("[data-cyb-stage]")||card;
+      var wrap=document.createElement("div"); wrap.className="cyb-anim";
+      var slot=document.createElement("div"); slot.className="cyb-lottie"; wrap.appendChild(slot);
+      var pre=document.createElement("pre"); pre.className="cyb-ascii"; pre.setAttribute("aria-hidden","true"); wrap.appendChild(pre);
+      stage.appendChild(wrap);
+      window.lottie.loadAnimation({container:slot,renderer:"canvas",loop:true,autoplay:true,path:"/anim/"+n+".json"});
+      asciify(slot, pre);
+    });
+  }
+  /* live ASCII: render Lottie to its own canvas (no SVG serialization = cheap),
+     downsample to a tiny grid, map brightness -> characters. Throttled ~12fps. */
+  var RAMP=" .:-=+*#%@";
+  var COLS=56, ROWS=34;
+  function asciify(slot, pre){
+    var sc=document.createElement("canvas"); sc.width=COLS; sc.height=ROWS;
+    var sctx=sc.getContext("2d",{willReadFrequently:true});
+    var last=0;
+    function loop(t){
+      if(t-last>80){ last=t;
+        var cv=slot.querySelector("canvas");
+        if(cv){
+          try{
+            sctx.clearRect(0,0,COLS,ROWS); sctx.drawImage(cv,0,0,COLS,ROWS);
+            var d=sctx.getImageData(0,0,COLS,ROWS).data, out="";
+            for(var y=0;y<ROWS;y++){ for(var x=0;x<COLS;x++){
+              var p=(y*COLS+x)*4, a=d[p+3];
+              var lum=a===0?0:(0.299*d[p]+0.587*d[p+1]+0.114*d[p+2]);
+              var ink=a===0?0:(255-lum)*(a/255)/255;
+              ink=Math.pow(ink,0.65);  /* gamma lift: brings out mid-tones so shapes read */
+              out+=RAMP[Math.min(9,Math.max(0,Math.round(ink*9)))];
+            } out+="\n"; }
+            pre.textContent=out;
+          }catch(e){}
+        }
+      }
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+  }
+  var hosts=document.querySelectorAll("[data-cyb-section]");
+  if(!("IntersectionObserver" in window)){hosts.forEach(initSection);return;}
+  var io=new IntersectionObserver(function(es){es.forEach(function(en){
+    if(en.isIntersecting){initSection(en.target);io.unobserve(en.target);}
+  });},{rootMargin:"300px"});
+  hosts.forEach(function(h){io.observe(h);});
+})();
+</script>
+<!-- Carousel: auto-scroll loop + drag (fixed-panel band) -->
+<script>
+(function(){
+  var view=document.querySelector("[data-caro-view]");
+  var track=document.querySelector("[data-caro-track]");
+  if(!view||!track) return;
+  var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var pos=0, max=0, paused=false, dragging=false, startX=0, startPos=0, moved=false;
+  function measure(){ max=Math.max(0, track.scrollWidth - view.clientWidth); }
+  measure(); window.addEventListener("resize",measure);
+  // auto-scroll
+  var last=0, SPEED=28; /* px per second (2x) */
+  function tick(t){
+    if(!last) last=t; var dt=(t-last)/1000; last=t;
+    if(!paused && !dragging && !reduce && max>0){
+      pos+=SPEED*dt;
+      if(pos>=max){ pos=0; } /* loop back to start */
+      track.style.transform="translateX("+(-pos)+"px)";
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+  // pause on hover
+  view.addEventListener("mouseenter",function(){paused=true;});
+  view.addEventListener("mouseleave",function(){paused=false;});
+  // drag / swipe
+  function down(x){ dragging=true; moved=false; startX=x; startPos=pos; track.classList.add("dragging"); }
+  function move(x){ if(!dragging) return; var dx=x-startX; if(Math.abs(dx)>3) moved=true;
+    pos=Math.min(max,Math.max(0,startPos-dx)); track.style.transform="translateX("+(-pos)+"px)"; }
+  function up(){ dragging=false; track.classList.remove("dragging"); }
+  view.addEventListener("mousedown",function(e){down(e.clientX); e.preventDefault();});
+  window.addEventListener("mousemove",function(e){move(e.clientX);});
+  window.addEventListener("mouseup",up);
+  view.addEventListener("touchstart",function(e){down(e.touches[0].clientX);},{passive:true});
+  view.addEventListener("touchmove",function(e){move(e.touches[0].clientX);},{passive:true});
+  view.addEventListener("touchend",up);
+  // prevent click navigation right after a drag
+  track.addEventListener("click",function(e){ if(moved){ e.preventDefault(); e.stopPropagation(); } },true);
+})();
+</script>
+<!-- Ping-pong marquee: set travel distance = container width - text width -->
+<script>
+(function(){
+  var els=document.querySelectorAll(".band h2.pingpong");
+  function size(){
+    els.forEach(function(h){
+      var inner=h.querySelector(".pp-inner"); if(!inner) return;
+      var travel=h.clientWidth - inner.scrollWidth;
+      h.style.setProperty("--pp-travel",(travel>0?travel:0)+"px");
+    });
+  }
+  if(document.fonts&&document.fonts.ready){document.fonts.ready.then(size);}
+  size(); window.addEventListener("resize",size);
+})();
+</script>
+<!-- Scroll-reveal: fade + rise sections as they enter the viewport -->
+<script>
+(function(){
+  var els=document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in');});return;}
+  var io=new IntersectionObserver(function(es){es.forEach(function(en){
+    if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}
+  });},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+  els.forEach(function(e){io.observe(e);});
+})();
+</script>
+<!-- Hero load reveal: wrap each H1 character so they fade/rise in sequence -->
+<script>
+(function(){
+  var h1=document.querySelector('.hero h1');
+  if(!h1) return;
+  if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var nodes=[].slice.call(h1.childNodes), out='', i=0;
+  function wrapWord(w){
+    var s='<span class="wd">';
+    w.split('').forEach(function(c){ s+='<span class="ch" style="--d:'+(i*0.028).toFixed(3)+'s">'+c.replace('<','&lt;')+'</span>'; i++; });
+    return s+'</span>';
+  }
+  nodes.forEach(function(n){
+    if(n.nodeType===3){ // text: split into words, keep each word unbreakable
+      n.textContent.split(/(\s+)/).forEach(function(tok){
+        if(tok===''){ return; }
+        if(/^\s+$/.test(tok)){ out+='<span class="sp"></span>'; }
+        else { out+=wrapWord(tok); }
+      });
+    } else if(n.nodeName==='BR'){ out+='<br>'; }
+    else { out+=n.outerHTML; }
+  });
+  h1.innerHTML=out;
+})();
+</script>
+<!-- Hover character-shuffle (behaviour imported from the previous version) -->
+<script>
+(function(){
+  var CHARS="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!<>-_\\/[]=+*?#";
+  function run(el){
+    if(el._scr) return;
+    var text=el.getAttribute("data-cyb-text");
+    if(text==null){text=el.textContent;el.setAttribute("data-cyb-text",text);}
+    el._scr=true;
+    var q=[],i;
+    // longer, more staggered scramble: characters start later and resolve over more frames
+    for(i=0;i<text.length;i++){q.push({c:text[i],s:Math.floor(Math.random()*16),e:Math.floor(Math.random()*18)+22,r:null});}
+    var frame=0,raf=0;
+    (function tick(){
+      var out="",done=0,j;
+      for(j=0;j<q.length;j++){
+        var o=q[j];
+        if(o.c===" "){out+=" ";done++;continue;}
+        if(frame>=o.e){done++;out+=o.c;}
+        else if(frame>=o.s){if(o.r==null||Math.random()<0.28){o.r=CHARS[Math.floor(Math.random()*CHARS.length)];}out+=o.r;}
+        else out+=o.c;
+      }
+      el.textContent=out;
+      if(done===q.length){el.textContent=text;el._scr=false;return;}
+      raf++; if(raf%2===0) frame++;  /* throttle: advance every other rAF -> ~half speed */
+      requestAnimationFrame(tick);
+    })();
+  }
+  var sel=".eyebrow,.pill,.navcta,.ftr-btn,.ftr-lbl,.uc h3,.card .t,.api-tag,.nav .lbl";
+  document.querySelectorAll(sel).forEach(function(el){
+    el.addEventListener("mouseenter",function(){run(el);});
+  });
+})();
+</script>
+<!-- Cookie consent (persists dismissal in localStorage; links to Cookie Notice) -->
+<style>
+#cyb-cookie{position:fixed;left:0;right:0;bottom:0;z-index:99999;background:#9fa8b1;color:var(--ink);
+  border-top:1px solid var(--ink);box-shadow:0 -6px 24px rgba(0,0,0,.25);padding:16px 22px;
+  display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;line-height:1.5}
+#cyb-cookie .cc-t{max-width:760px}
+#cyb-cookie a{color:var(--ink);text-decoration:underline;font-weight:600}
+#cyb-cookie button{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid var(--ink);padding:10px 22px;cursor:pointer;background:transparent;color:var(--ink);
+  clip-path:polygon(0 0,100% 0,100% 60%,92% 100%,0 100%)}
+#cyb-cookie button.primary{background:#fff}
+#cyb-cookie button:hover{background:#eef0f1}
+</style>
+<script>
+(function(){
+  try{ if(localStorage.getItem("cyb_cookie_ok")) return; }catch(e){}
+  function build(){
+    if(document.getElementById("cyb-cookie")) return;
+    var bar=document.createElement("div"); bar.id="cyb-cookie";
+    var t=document.createElement("span"); t.className="cc-t";
+    t.innerHTML='▌ We use cookies to operate this site and improve your experience. See our <a href="/cookie-notice.html">Cookie Notice</a>.';
+    function mk(label,primary){var b=document.createElement("button");b.textContent=label;if(primary)b.className="primary";return b;}
+    var accept=mk("Accept",true), decline=mk("Decline",false);
+    function dismiss(v){try{localStorage.setItem("cyb_cookie_ok",v);}catch(e){}
+      bar.style.transition="transform .35s ease,opacity .35s ease";bar.style.transform="translateY(120%)";bar.style.opacity="0";
+      setTimeout(function(){if(bar.parentNode)bar.parentNode.removeChild(bar);},400);}
+    accept.addEventListener("click",function(){dismiss("1");});
+    decline.addEventListener("click",function(){dismiss("0");});
+    bar.appendChild(t);bar.appendChild(decline);bar.appendChild(accept);
+    document.body.appendChild(bar);
+  }
+  if(document.readyState!=="loading") setTimeout(build,700);
+  else window.addEventListener("load",function(){setTimeout(build,700);});
+})();
+</script>
+</body>
+</html>

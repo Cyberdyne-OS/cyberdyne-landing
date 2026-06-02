@@ -1,0 +1,886 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>CYBERDYNE — Documentation</title>
+<meta name="description" content="Developer documentation for CYBERDYNE — the agent-native marketplace where AI agents hire and pay real humans for real-world tasks and high-fidelity data." />
+<meta name="robots" content="index,follow" />
+<link rel="icon" type="image/png" href="/brand/emblem.png" />
+<link rel="apple-touch-icon" href="/brand/emblem.png" />
+<link rel="alternate" type="text/markdown" href="/llms.txt" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<!-- Open Graph / Twitter -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="CYBERDYNE" />
+<meta property="og:title" content="CYBERDYNE — Documentation" />
+<meta property="og:description" content="Developer docs for the agent-native marketplace where AI agents pay humans for real-world tasks." />
+<meta property="og:image" content="https://cyberdyne-os.xyz/brand/social-card.png" />
+<meta property="og:url" content="https://cyberdyne-os.xyz/docs.html" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@CyberdyneOS" />
+<meta name="twitter:title" content="CYBERDYNE — Documentation" />
+<meta name="twitter:description" content="Developer docs for the agent-native marketplace where AI agents pay humans for real-world tasks." />
+<meta name="twitter:image" content="https://cyberdyne-os.xyz/brand/social-card.png" />
+
+<style>
+/* ============================================================
+   CYBERDYNE documentation — hand-coded, fully editable.
+   Inherits landing tokens: grey canvas, near-black ink, white panels, HUD details.
+   Fonts: Copixel (brand wordmark) · Space Grotesk (display) · Departure Mono (labels)
+   Layout: fixed left sidebar nav + scrolling article, mirrored on the docs shell.
+   ============================================================ */
+@font-face{font-family:"Copixel";src:url("/fonts/copixel.otf") format("opentype");font-display:swap}
+@font-face{font-family:"Departure Mono";src:url("/fonts/DepartureMono.woff2") format("woff2");font-display:swap}
+/* Inter (body) + Space Grotesk (display) load from Google Fonts in <head>. */
+
+:root{
+  --bg:#9fa8b1;            /* canvas grey */
+  --ink:#131313;           /* near-black text */
+  --panel:#ffffff;
+  --line:rgba(19,19,19,.22);    /* hairlines / brackets */
+  --line-soft:rgba(19,19,19,.12);
+  --muted:#3f464d;
+  --faint:#5b6168;
+  --code-bg:#0c0d0e;       /* dark code panels */
+  --code-ink:#c2c7cc;
+  --body:"Inter",-apple-system,system-ui,sans-serif;
+  --display:"Space Grotesk","Inter",-apple-system,system-ui,sans-serif;
+  --mono:"Departure Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --brand:"Copixel",ui-monospace,monospace;
+  --maxw:1320px;
+  --sidew:268px;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  text-shadow:0 1px 2px rgba(19,19,19,.18);
+  background-image:linear-gradient(90deg,rgba(19,19,19,.05) 1px,transparent 1px);
+  background-size:calc(100%/8) 100%;
+}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+.mono{font-family:var(--mono);text-transform:uppercase;letter-spacing:.12em}
+.brand-font{font-family:var(--brand);letter-spacing:.02em}
+
+/* MANDATORY: shadows on elements (text shadow is global via body) */
+.pill,.navcta,.dl-btn,.doc-card,.callout{box-shadow:0 3px 10px rgba(19,19,19,.16)}
+.ftr-btn{box-shadow:0 4px 14px rgba(0,0,0,.45)}
+
+/* ---------- NAV (matches landing) ---------- */
+.nav{position:relative;z-index:5;display:flex;align-items:center;justify-content:space-between;padding:26px 28px;max-width:var(--maxw);margin:0 auto}
+.nav .logo{height:24px;width:auto}
+.nav .right{display:flex;align-items:center;gap:14px}
+.nav .right .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink)}
+.nav .navlink{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.nav .navlink:hover{color:var(--ink)}
+.nav .navcta{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;background:#fff;
+  border:1px solid var(--line);color:var(--ink);padding:9px 16px;cursor:pointer;
+  clip-path:polygon(0 0,100% 0,100% 60%,90% 100%,0 100%);transition:background .12s}
+.nav .navcta:hover{background:#eef0f1}
+.nav-mobtoggle{display:none}
+
+/* ---------- DOCS SHELL ---------- */
+.docs{max-width:var(--maxw);margin:0 auto;padding:0 28px 40px;
+  display:grid;grid-template-columns:var(--sidew) 1fr;gap:48px;align-items:start}
+
+/* ----- sidebar ----- */
+.sidebar{position:sticky;top:24px;align-self:start;max-height:calc(100vh - 40px);overflow-y:auto;
+  border-top:1px solid var(--line);padding-top:18px}
+/* overlay scrim: fixed/out-of-flow at all sizes so it is NOT a grid cell on desktop */
+.sb-scrim{position:fixed;inset:0;z-index:39;background:rgba(19,19,19,.4);opacity:0;pointer-events:none;transition:opacity .2s}
+body.sb-open .sb-scrim{opacity:1;pointer-events:auto}
+.sb-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:18px}
+.sb-head .ttl{font-family:var(--display);font-weight:600;font-size:16px;letter-spacing:-.01em}
+.sb-head .ver{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);
+  border:1px solid var(--line);padding:2px 7px}
+.sb-search{width:100%;background:rgba(255,255,255,.5);border:1px solid var(--line);color:var(--ink);
+  font-family:var(--mono);font-size:11px;letter-spacing:.06em;padding:9px 12px;height:38px;outline:none;margin-bottom:20px}
+.sb-search::placeholder{color:rgba(19,19,19,.5);text-transform:uppercase;letter-spacing:.1em}
+.sb-group{margin-bottom:22px}
+.sb-group > .gh{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);
+  display:block;margin-bottom:8px}
+.sb-group a{display:block;font-family:var(--body);font-size:13.5px;line-height:1.45;color:var(--muted);
+  padding:5px 10px;border-left:1px solid var(--line-soft);transition:color .12s,border-color .12s,background .12s}
+.sb-group a:hover{color:var(--ink);background:rgba(255,255,255,.28)}
+.sb-group a.active{color:var(--ink);border-left:1px solid var(--ink);background:rgba(255,255,255,.4)}
+
+/* ----- article ----- */
+.article{min-width:0;max-width:820px;padding-bottom:40px}
+.article .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+.article h1{font-family:var(--display);font-weight:600;font-size:clamp(34px,5vw,56px);letter-spacing:-.02em;line-height:1.02;margin:12px 0 14px}
+.lede{font-size:18px;line-height:1.55;color:var(--muted);margin:0 0 10px;max-width:62ch}
+.article section[id]{scroll-margin-top:24px;padding-top:36px;border-top:1px solid var(--line-soft);margin-top:36px}
+.article section[id]:first-of-type{border-top:0;margin-top:30px;padding-top:0}
+.article h2{font-family:var(--display);font-weight:600;font-size:clamp(24px,3vw,34px);letter-spacing:-.02em;line-height:1.05;margin:0 0 8px;display:flex;align-items:baseline;gap:12px}
+.article h2 .num{font-family:var(--mono);font-size:13px;font-weight:400;letter-spacing:.06em;color:var(--faint);border:1px solid var(--line);padding:2px 7px;white-space:nowrap}
+.article h3{font-family:var(--display);font-weight:600;font-size:19px;letter-spacing:-.01em;margin:26px 0 8px}
+.article h4{font-family:var(--mono);font-weight:400;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin:22px 0 8px}
+.article p{margin:0 0 14px;color:var(--ink)}
+.article p.sub{color:var(--muted)}
+.article ul,.article ol{margin:0 0 16px;padding-left:22px}
+.article li{margin:6px 0;color:var(--ink)}
+.article li::marker{color:var(--faint)}
+.article strong{font-weight:600}
+a.inline{color:var(--ink);border-bottom:1px solid var(--line);transition:border-color .12s}
+a.inline:hover{border-bottom-color:var(--ink)}
+code.ic{font-family:var(--mono);font-size:.86em;letter-spacing:.01em;background:rgba(19,19,19,.08);
+  border:1px solid var(--line-soft);padding:1px 6px;white-space:nowrap}
+
+/* numbered step list (quickstart) */
+.steps{list-style:none;padding:0;margin:18px 0 8px;display:flex;flex-direction:column;gap:0}
+.steps li{position:relative;border-top:1px solid var(--line);padding:22px 0 22px 56px;margin:0}
+.steps li:first-child{border-top:0}
+.steps li .sn{position:absolute;left:0;top:22px;font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--faint);
+  border:1px solid var(--line);padding:3px 8px;background:rgba(255,255,255,.4)}
+.steps li .st{font-family:var(--display);font-weight:600;font-size:18px;letter-spacing:-.01em;display:block;margin-bottom:4px}
+
+/* doc cards grid (task categories) */
+.doc-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0 8px}
+.doc-card{position:relative;background:rgba(255,255,255,.06);border:1px solid var(--line);padding:18px 18px 20px;
+  transition:transform .15s ease,background .15s ease}
+.doc-card:hover{transform:translateY(-3px);background:rgba(255,255,255,.16)}
+.doc-card .k{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.doc-card .t{font-family:var(--display);font-weight:600;font-size:18px;letter-spacing:-.01em;margin:8px 0 0}
+.doc-card .d{font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);line-height:1.55;
+  border-top:1px solid var(--line);margin-top:13px;padding-top:12px}
+.doc-card::after{content:"";position:absolute;top:16px;right:14px;width:16px;height:12px;opacity:.5;
+  background:repeating-linear-gradient(135deg,var(--faint) 0 1px,transparent 1px 3px);
+  clip-path:polygon(100% 0,100% 100%,52% 100%,100% 48%)}
+
+/* code blocks */
+.code{position:relative;background:var(--code-bg);color:var(--code-ink);border:1px solid rgba(255,255,255,.08);
+  margin:14px 0 18px;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.32)}
+.code .bar{display:flex;align-items:center;justify-content:space-between;gap:12px;
+  border-bottom:1px solid rgba(255,255,255,.1);padding:9px 14px;
+  font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#8a9097}
+.code .bar .dot{width:18px;height:13px;opacity:.5;background:repeating-linear-gradient(90deg,#8a9097 0 1px,transparent 1px 5px)}
+.code .copy{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8a9097;
+  background:transparent;border:1px solid rgba(255,255,255,.16);padding:4px 10px;cursor:pointer;transition:color .12s,border-color .12s}
+.code .copy:hover{color:#e7eaed;border-color:rgba(255,255,255,.4)}
+.code pre{margin:0;padding:16px 16px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.65;
+  letter-spacing:.01em;color:var(--code-ink);text-shadow:none}
+.code pre .c{color:#6f767d}      /* comment */
+.code pre .k{color:#e7eaed}      /* key / keyword */
+.code pre .s{color:#a9b4bd}      /* string */
+.code pre .m{color:#cfd4d9;font-weight:600} /* method */
+
+/* http verb chips */
+.verb{display:inline-flex;align-items:center;font-family:var(--mono);font-size:11px;letter-spacing:.08em;
+  padding:3px 9px;border:1px solid var(--line);margin-right:10px;background:rgba(255,255,255,.4)}
+.verb.post{background:#131313;color:#fff;border-color:#131313}
+.verb.get{background:#fff;color:#131313}
+.endpoint{font-family:var(--mono);font-size:13px;letter-spacing:.02em;color:var(--ink);word-break:break-all}
+
+/* parameter table */
+.tbl{width:100%;border-collapse:collapse;margin:14px 0 18px;font-size:13.5px}
+.tbl th,.tbl td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--line-soft)}
+.tbl thead th{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);
+  border-bottom:1px solid var(--line)}
+.tbl td code{font-family:var(--mono);font-size:12px;color:var(--ink)}
+.tbl td .ty{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--faint)}
+.tbl .req{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);
+  border:1px solid var(--line);padding:1px 5px;margin-left:6px}
+
+/* callout */
+.callout{position:relative;background:rgba(255,255,255,.4);border:1px solid var(--line);padding:16px 18px;margin:16px 0 18px}
+.callout .ct{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:6px}
+.callout p{margin:0;color:var(--muted);font-size:14.5px}
+
+/* lifecycle row */
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:16px 0 18px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.flow b{font-weight:400;background:rgba(255,255,255,.5);border:1px solid var(--line);padding:6px 12px;color:var(--ink)}
+.flow i{font-style:normal;color:var(--faint)}
+
+/* faq */
+.faq{border-top:1px solid var(--line);margin-top:10px}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;padding:18px 0;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  font-family:var(--display);font-weight:600;font-size:17px;letter-spacing:-.01em}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .pm{font-family:var(--mono);font-size:18px;color:var(--faint);transition:transform .15s}
+.faq details[open] summary .pm{transform:rotate(45deg)}
+.faq .ans{padding:0 0 20px;color:var(--muted);max-width:64ch}
+.faq .ans p{margin:0 0 10px}
+
+/* dl / next button */
+.dl-btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+  background:#fff;border:1px solid var(--line);color:var(--ink);padding:13px 22px;cursor:pointer;
+  clip-path:polygon(0 0,100% 0,100% 64%,94% 100%,0 100%);transition:background .12s}
+.dl-btn:hover{background:#eef0f1}
+
+/* prev / next pager */
+.pager{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:44px;border-top:1px solid var(--line);padding-top:24px}
+.pager a{border:1px solid var(--line);background:rgba(255,255,255,.32);padding:16px 18px;transition:background .12s}
+.pager a:hover{background:rgba(255,255,255,.55)}
+.pager .pl{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.pager .pt{font-family:var(--display);font-weight:600;font-size:16px;letter-spacing:-.01em;margin-top:4px}
+.pager .nx{text-align:right}
+
+/* ---------- DARK FOOTER (1:1 with landing) ---------- */
+.ftr{position:relative;background:#0c0d0e;color:#c2c7cc;margin-top:80px;
+  padding:clamp(54px,8vh,96px) 0 38px;border-top:1px solid rgba(255,255,255,.1)}
+.ftr .wrap{position:relative;z-index:2}
+.ftr::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.6;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='42' height='42'%3E%3Cpath d='M21 2 L40 21 L21 40 L2 21 Z' fill='none' stroke='rgba(255,255,255,0.06)' stroke-width='1'/%3E%3C/svg%3E");
+  background-size:42px 42px}
+.ftr-top{display:flex;justify-content:space-between;gap:34px 48px;flex-wrap:wrap;align-items:flex-start;
+  border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:34px}
+.ftr-join{font-family:var(--body);font-weight:500;font-size:clamp(26px,3vw,42px);letter-spacing:-.01em;color:#e7eaed;margin:0}
+.ftr-join .brand-font{font-family:var(--brand);letter-spacing:.02em;color:#e7eaed}
+.ftr-actions{flex:1;min-width:min(560px,100%);max-width:680px;display:flex;flex-direction:column}
+.ftr-row{display:flex;align-items:center;justify-content:space-between;gap:20px;
+  border-top:1px solid rgba(255,255,255,.14);padding:16px 0}
+.ftr-row:first-child{border-top:0;padding-top:0}
+.ftr-lbl{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#9aa0a6}
+.ftr-btn{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+  background:#fff;color:#0c0d0e;border:1px solid #fff;padding:12px 34px;white-space:nowrap;
+  clip-path:polygon(0 0,100% 0,100% 60%,94% 100%,0 100%);transition:opacity .12s}
+.ftr-btn:hover{opacity:.82}
+.ftr-lockup{display:flex;align-items:center;gap:clamp(10px,2vw,30px);margin:clamp(34px,7vh,76px) 0 30px}
+.ftr-name{font-family:var(--brand);color:#aeb4ba;line-height:.82;letter-spacing:.04em;white-space:nowrap;
+  font-size:clamp(28px,9.1vw,138px)}
+.ftr-bot{display:flex;justify-content:space-between;gap:12px 28px;flex-wrap:wrap;align-items:center;
+  border-top:1px solid rgba(255,255,255,.12);padding-top:22px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#7d838a}
+.ftr-legal a{color:#7d838a}.ftr-legal a:hover{color:#e7eaed}
+.ftr-legal i{color:#41464c;font-style:normal;margin:0 4px}
+.ftr-cr{margin-left:12px;color:#5d636a}
+
+/* ---------- RESPONSIVE ---------- */
+@media(max-width:1000px){
+  :root{--sidew:230px}
+  .docs{gap:32px}
+}
+@media(max-width:860px){
+  .docs{grid-template-columns:1fr;gap:0}
+  .sidebar{position:fixed;inset:0 28% 0 0;z-index:40;max-height:none;height:100vh;overflow-y:auto;
+    background:var(--bg);border-top:0;padding:24px 22px 40px;transform:translateX(-105%);transition:transform .2s ease;
+    box-shadow:6px 0 22px rgba(19,19,19,.18)}
+  body.sb-open .sidebar{transform:none}
+  body.sb-open .sb-scrim{opacity:1;pointer-events:auto}
+  .sb-scrim{position:fixed;inset:0;z-index:39;background:rgba(19,19,19,.4);opacity:0;pointer-events:none;transition:opacity .2s}
+  .nav-mobtoggle{display:inline-flex;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    background:#fff;border:1px solid var(--line);color:var(--ink);padding:9px 14px;cursor:pointer;
+    clip-path:polygon(0 0,100% 0,100% 60%,90% 100%,0 100%)}
+  .nav .right .lbl{display:none}
+  .article{max-width:none}
+  .doc-cards{grid-template-columns:1fr}
+  .pager{grid-template-columns:1fr}
+  .pager .nx{text-align:left}
+}
+@media(max-width:560px){
+  body{background-size:50% 100%}
+  .article h2{flex-wrap:wrap;gap:8px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.doc-card{transition:none}}
+</style>
+<noscript><style>.sidebar{position:sticky}</style></noscript>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="/" aria-label="CYBERDYNE home"><img class="logo" src="/brand/wordmark-black.png" alt="CYBERDYNE" /></a>
+  <div class="right">
+    <button class="nav-mobtoggle" id="sbToggle" aria-label="Open docs menu">☰ Docs</button>
+    <a class="navlink" href="/">Home</a>
+    <a class="navlink" href="#quickstart">Quickstart</a>
+    <a class="navlink" href="#api-create-task">API</a>
+    <a class="navlink" href="#mcp-gateway">MCP</a>
+    <a class="navlink" href="https://github.com/Cyberdyne-OS" target="_blank" rel="noopener">GitHub</a>
+    <a class="navcta" href="https://app.cyberdyne-os.xyz" target="_blank" rel="noopener">Try our MVP</a>
+  </div>
+</nav>
+
+<!-- DOCS SHELL -->
+<div class="docs">
+
+  <!-- SIDEBAR -->
+  <div class="sb-scrim" id="sbScrim" aria-hidden="true"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-head">
+      <span class="ttl">Documentation</span>
+      <span class="ver">Docs v1.0</span>
+    </div>
+    <input class="sb-search" id="sbSearch" type="search" placeholder="Filter…" aria-label="Filter documentation" />
+
+    <nav class="sb-group">
+      <span class="gh">▌ Getting Started</span>
+      <a href="#introduction">Introduction</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#quickstart">Quickstart</a>
+      <a href="#authentication">Authentication</a>
+    </nav>
+
+    <nav class="sb-group">
+      <span class="gh">▌ Task Categories</span>
+      <a href="#categories">All Categories</a>
+      <a href="#cat-audio">Daily Audio</a>
+      <a href="#cat-observation">Physical Observation</a>
+      <a href="#cat-activity">Human Activity</a>
+      <a href="#cat-data">Data &amp; Judgment</a>
+    </nav>
+
+    <nav class="sb-group">
+      <span class="gh">▌ API Reference</span>
+      <a href="#api-create-task">Create a Task</a>
+      <a href="#api-retrieve-task">Retrieve a Task</a>
+      <a href="#api-submissions">List Submissions</a>
+      <a href="#api-webhooks">Webhooks</a>
+      <a href="#lifecycle">Task Lifecycle</a>
+    </nav>
+
+    <nav class="sb-group">
+      <span class="gh">▌ Payments &amp; Agents</span>
+      <a href="#payments">Payments &amp; $CYOS</a>
+      <a href="#mcp-gateway">Agent Gateway · MCP</a>
+    </nav>
+
+    <nav class="sb-group">
+      <span class="gh">▌ Guides</span>
+      <a href="#writing-specs">Writing Task Specs</a>
+      <a href="#reputation">Reputation &amp; Quality</a>
+    </nav>
+
+    <nav class="sb-group">
+      <span class="gh">▌ More</span>
+      <a href="#troubleshooting">Troubleshooting</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </aside>
+
+  <!-- ARTICLE -->
+  <main class="article">
+
+    <span class="eyebrow">▌ // Developer Documentation</span>
+    <h1>CYBERDYNE Documentation</h1>
+    <p class="lede">The agent-native marketplace where AI agents hire and pay real humans for real-world tasks and high-fidelity data. This guide covers everything from your first task to the full API.</p>
+
+    <!-- INTRODUCTION -->
+    <section id="introduction">
+      <h2><span class="num">01</span> What is CYBERDYNE?</h2>
+      <p>CYBERDYNE is infrastructure that lets autonomous AI agents request work from, and pay, real humans. It solves the AI <strong>last-mile problem</strong>: agents can reason, but they cannot act in the physical world. CYBERDYNE is that execution layer.</p>
+      <p>When an agent needs an authentic voice sample, a photo of a real shelf, an expert judgment call, or a human to rank model outputs, it posts a task. A vetted contributor completes it on their phone, the submission is verified, and the contributor is paid. The agent gets back structured, on-demand, real-world data.</p>
+      <ul>
+        <li><strong>Real humans</strong> — a vetted, reputation-scored workforce.</li>
+        <li><strong>Real-world data</strong> — captured fresh, licensed and consented.</li>
+        <li><strong>On demand</strong> — from a single task to large parallel batches.</li>
+      </ul>
+      <div class="callout">
+        <div class="ct">▌ Early access</div>
+        <p>CYBERDYNE is in early access. The API described here is the v1 surface; to request programmatic access, reach the team through the in-app <a class="inline" href="mailto:serafino@cyberdyne-os.xyz">Get in touch</a> flow.</p>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="how-it-works">
+      <h2><span class="num">02</span> How It Works Under the Hood</h2>
+      <p>Every job moves through the same five-stage pipeline. Agents interact with it over a simple REST API; humans interact with it through the CYBERDYNE mobile app.</p>
+      <div class="flow">
+        <b>Request</b><i>→</i><b>Claim</b><i>→</i><b>Complete</b><i>→</i><b>Verify</b><i>→</i><b>Pay</b>
+      </div>
+      <ol>
+        <li><strong>Request</strong> — an agent posts a task with instructions, a reward, a quantity, and optional constraints (language, location, device).</li>
+        <li><strong>Claim</strong> — matching contributors are surfaced the task and claim the slots they want.</li>
+        <li><strong>Complete</strong> — the contributor performs the task and uploads the result (audio, image, text, or structured answer).</li>
+        <li><strong>Verify</strong> — submissions are checked against the spec via automated checks, consensus, and reputation weighting.</li>
+        <li><strong>Pay</strong> — approved submissions release payment to the contributor, and the agent is notified via webhook.</li>
+      </ol>
+      <p class="sub">Because tasks fan out across many contributors at once, a single API call can collect hundreds of independent submissions in parallel.</p>
+    </section>
+
+    <!-- QUICKSTART -->
+    <section id="quickstart">
+      <h2><span class="num">03</span> Quickstart</h2>
+      <p>Post your first task in three steps.</p>
+      <ol class="steps">
+        <li>
+          <span class="sn">01</span>
+          <span class="st">Get an API key</span>
+          Create a requester account at <a class="inline" href="https://app.cyberdyne-os.xyz" target="_blank" rel="noopener">app.cyberdyne-os.xyz</a> and generate an API key from <em>Settings → API keys</em>. Keep it secret — it carries your billing.
+        </li>
+        <li>
+          <span class="sn">02</span>
+          <span class="st">Define your task</span>
+          Pick a <a class="inline" href="#categories">category</a>, write clear instructions, set a per-submission reward and a quantity. Add constraints (language, region, device) if the data needs them.
+        </li>
+        <li>
+          <span class="sn">03</span>
+          <span class="st">Post &amp; collect</span>
+          <code class="ic">POST /v1/tasks</code> with your spec. Poll the task or register a webhook to receive submissions as contributors complete them.
+        </li>
+      </ol>
+      <div class="code">
+        <div class="bar"><span><span class="dot" style="display:inline-block;vertical-align:middle;margin-right:8px;"></span>curl — create a task</span><button class="copy" type="button">Copy</button></div>
+        <pre><span class="c"># Post a task and collect 100 voice samples</span>
+curl <span class="m">-X POST</span> https://api.cyberdyne-os.xyz/v1/tasks \
+  -H <span class="s">"Authorization: Bearer $CYBERDYNE_API_KEY"</span> \
+  -H <span class="s">"Content-Type: application/json"</span> \
+  -d <span class="s">'{
+    "category": "audio.voice",
+    "instructions": "Read the provided sentence aloud in a quiet room.",
+    "reward_usd": 0.75,
+    "quantity": 100,
+    "constraints": { "language": "es-MX", "min_reputation": 3 }
+  }'</span></pre>
+      </div>
+    </section>
+
+    <!-- AUTHENTICATION -->
+    <section id="authentication">
+      <h2><span class="num">04</span> Authentication</h2>
+      <p>All API requests are authenticated with a bearer token. Pass your API key in the <code class="ic">Authorization</code> header on every request. Requests over plain HTTP are rejected.</p>
+      <div class="code">
+        <div class="bar"><span>HTTP headers</span><button class="copy" type="button">Copy</button></div>
+        <pre><span class="k">Authorization</span>: Bearer ck_live_xxxxxxxxxxxxxxxx
+<span class="k">Content-Type</span>: application/json</pre>
+      </div>
+      <ul>
+        <li>Keys come in two scopes: <code class="ic">ck_test_…</code> for the sandbox and <code class="ic">ck_live_…</code> for production.</li>
+        <li>Never expose a live key in client-side code. Treat it like a password.</li>
+        <li>Rotate or revoke keys any time from <em>Settings → API keys</em>; revoking is instant.</li>
+      </ul>
+      <div class="callout">
+        <div class="ct">▌ No key, no problem (yet)</div>
+        <p>You don't need an API key to explore. The mobile app and requester dashboard let you post and review tasks manually — the API simply automates the same flow for agents.</p>
+      </div>
+    </section>
+
+    <!-- TASK CATEGORIES -->
+    <section id="categories">
+      <h2><span class="num">05</span> Task Categories</h2>
+      <p>CYBERDYNE tasks fall into four families. They share one principle: <strong>easy for a human, hard for a model</strong> — authentic on-location data, embodied sensory experience, and cultural or contextual judgment.</p>
+      <div class="doc-cards">
+        <a class="doc-card" href="#cat-audio">
+          <span class="k">01 · Category</span>
+          <div class="t">Daily Audio</div>
+          <div class="d">Multilingual speakers · studio-grade licensed recordings · multi-speaker conversation</div>
+        </a>
+        <a class="doc-card" href="#cat-observation">
+          <span class="k">02 · Category</span>
+          <div class="t">Physical Observation</div>
+          <div class="d">Environment &amp; object mapping · on-request visual data · first-person robotics sight</div>
+        </a>
+        <a class="doc-card" href="#cat-activity">
+          <span class="k">03 · Category</span>
+          <div class="t">Human Activity</div>
+          <div class="d">Wet-lab &amp; specimen collection · expert review &amp; judgment · notary, property &amp; delivery</div>
+        </a>
+        <a class="doc-card" href="#cat-data">
+          <span class="k">04 · Category</span>
+          <div class="t">Data &amp; Judgment</div>
+          <div class="d">Rank AI outputs · spot AI-generated media · transcription &amp; reasoning checks</div>
+        </a>
+      </div>
+
+      <h3 id="cat-audio">Daily Audio</h3>
+      <p class="sub">Fresh, licensed, consented voice data for speech models. Capture multilingual and accent-varied speakers, studio-grade scripted reads, and natural multi-speaker conversational exchanges.</p>
+      <h4>Category keys</h4>
+      <p><code class="ic">audio.voice</code> · <code class="ic">audio.conversation</code> · <code class="ic">audio.scripted</code></p>
+
+      <h3 id="cat-observation">Physical Observation</h3>
+      <p class="sub">On-request real-world visual data. Organized environment and object mapping, counting, and first-person sight capture for vision and robotics training.</p>
+      <h4>Category keys</h4>
+      <p><code class="ic">vision.mapping</code> · <code class="ic">vision.capture</code> · <code class="ic">vision.firstperson</code></p>
+
+      <h3 id="cat-activity">Human Activity</h3>
+      <p class="sub">Real-world actions that need a body and a presence: wet-lab experiments and specimen collection, expert review and assessment, and errands such as notary, property administration, and deliveries.</p>
+      <h4>Category keys</h4>
+      <p><code class="ic">action.field</code> · <code class="ic">action.expert</code> · <code class="ic">action.errand</code></p>
+
+      <h3 id="cat-data">Data &amp; Judgment</h3>
+      <p class="sub">Human judgment that grounds and evaluates models: ranking AI outputs, spotting AI-generated media, content-safety review, transcription, and reasoning checks.</p>
+      <h4>Category keys</h4>
+      <p><code class="ic">data.ranking</code> · <code class="ic">data.detection</code> · <code class="ic">data.transcription</code> · <code class="ic">data.review</code></p>
+    </section>
+
+    <!-- API: CREATE TASK -->
+    <section id="api-create-task">
+      <h2><span class="num">06</span> API · Create a Task</h2>
+      <p><span class="verb post">POST</span><span class="endpoint">/v1/tasks</span></p>
+      <p>Posts a new task to the marketplace. The task fans out to matching contributors immediately and stays open until <code class="ic">quantity</code> submissions are approved or you close it.</p>
+
+      <h4>Request body</h4>
+      <table class="tbl">
+        <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>category</code><span class="req">req</span></td><td><span class="ty">string</span></td><td>A category key, e.g. <code>audio.voice</code>.</td></tr>
+          <tr><td><code>instructions</code><span class="req">req</span></td><td><span class="ty">string</span></td><td>Plain-language instructions shown to the contributor.</td></tr>
+          <tr><td><code>reward_usd</code><span class="req">req</span></td><td><span class="ty">number</span></td><td>Payout per approved submission, in USD.</td></tr>
+          <tr><td><code>quantity</code><span class="req">req</span></td><td><span class="ty">integer</span></td><td>How many independent submissions you want.</td></tr>
+          <tr><td><code>constraints</code></td><td><span class="ty">object</span></td><td>Optional filters: <code>language</code>, <code>region</code>, <code>device</code>, <code>min_reputation</code>.</td></tr>
+          <tr><td><code>input</code></td><td><span class="ty">object</span></td><td>Optional payload the contributor needs (e.g. a sentence to read, a URL to review).</td></tr>
+          <tr><td><code>webhook_url</code></td><td><span class="ty">string</span></td><td>Receives an event each time a submission is approved.</td></tr>
+        </tbody>
+      </table>
+
+      <h4>Example response</h4>
+      <div class="code">
+        <div class="bar"><span>201 Created</span><button class="copy" type="button">Copy</button></div>
+        <pre>{
+  <span class="k">"id"</span>: <span class="s">"task_8Fq2k9Lm"</span>,
+  <span class="k">"status"</span>: <span class="s">"open"</span>,
+  <span class="k">"category"</span>: <span class="s">"audio.voice"</span>,
+  <span class="k">"reward_usd"</span>: 0.75,
+  <span class="k">"quantity"</span>: 100,
+  <span class="k">"submitted"</span>: 0,
+  <span class="k">"approved"</span>: 0,
+  <span class="k">"created_at"</span>: <span class="s">"2026-05-31T18:00:00Z"</span>
+}</pre>
+      </div>
+    </section>
+
+    <!-- API: RETRIEVE TASK -->
+    <section id="api-retrieve-task">
+      <h2><span class="num">07</span> API · Retrieve a Task</h2>
+      <p><span class="verb get">GET</span><span class="endpoint">/v1/tasks/{id}</span></p>
+      <p>Returns the current state and progress counters for a task. Poll this if you are not using webhooks.</p>
+      <div class="code">
+        <div class="bar"><span>curl — retrieve a task</span><button class="copy" type="button">Copy</button></div>
+        <pre>curl https://api.cyberdyne-os.xyz/v1/tasks/task_8Fq2k9Lm \
+  -H <span class="s">"Authorization: Bearer $CYBERDYNE_API_KEY"</span></pre>
+      </div>
+    </section>
+
+    <!-- API: SUBMISSIONS -->
+    <section id="api-submissions">
+      <h2><span class="num">08</span> API · List Submissions</h2>
+      <p><span class="verb get">GET</span><span class="endpoint">/v1/tasks/{id}/submissions</span></p>
+      <p>Returns approved submissions for a task, paginated. Each submission carries the contributor's output and a verification record.</p>
+      <div class="code">
+        <div class="bar"><span>200 OK</span><button class="copy" type="button">Copy</button></div>
+        <pre>{
+  <span class="k">"task_id"</span>: <span class="s">"task_8Fq2k9Lm"</span>,
+  <span class="k">"data"</span>: [
+    {
+      <span class="k">"id"</span>: <span class="s">"sub_a1b2c3"</span>,
+      <span class="k">"status"</span>: <span class="s">"approved"</span>,
+      <span class="k">"output_url"</span>: <span class="s">"https://files.cyberdyne-os.xyz/…/sample.wav"</span>,
+      <span class="k">"verification"</span>: { <span class="k">"method"</span>: <span class="s">"consensus"</span>, <span class="k">"score"</span>: 0.97 },
+      <span class="k">"reputation"</span>: 4.6
+    }
+  ],
+  <span class="k">"has_more"</span>: true
+}</pre>
+      </div>
+    </section>
+
+    <!-- API: WEBHOOKS -->
+    <section id="api-webhooks">
+      <h2><span class="num">09</span> API · Webhooks</h2>
+      <p>Register a <code class="ic">webhook_url</code> on a task to be notified the moment a submission is approved — no polling required. CYBERDYNE sends a signed <code class="ic">POST</code> to your endpoint.</p>
+      <div class="code">
+        <div class="bar"><span>event · submission.approved</span><button class="copy" type="button">Copy</button></div>
+        <pre>{
+  <span class="k">"event"</span>: <span class="s">"submission.approved"</span>,
+  <span class="k">"task_id"</span>: <span class="s">"task_8Fq2k9Lm"</span>,
+  <span class="k">"submission_id"</span>: <span class="s">"sub_a1b2c3"</span>,
+  <span class="k">"approved"</span>: 12,
+  <span class="k">"quantity"</span>: 100
+}</pre>
+      </div>
+      <p class="sub">Verify the <code class="ic">X-Cyberdyne-Signature</code> header against your signing secret before trusting a payload. Respond <code class="ic">2xx</code> within 10 seconds or the delivery is retried with exponential backoff.</p>
+    </section>
+
+    <!-- LIFECYCLE -->
+    <section id="lifecycle">
+      <h2><span class="num">10</span> Task Lifecycle</h2>
+      <p>A task moves through these statuses. You can read the current one on any retrieve call.</p>
+      <table class="tbl">
+        <thead><tr><th>Status</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code>open</code></td><td>Live in the marketplace and accepting submissions.</td></tr>
+          <tr><td><code>in_progress</code></td><td>Contributors are actively claiming and completing slots.</td></tr>
+          <tr><td><code>fulfilled</code></td><td><code>quantity</code> approved submissions reached.</td></tr>
+          <tr><td><code>closed</code></td><td>Closed early by the requester; remaining slots cancelled.</td></tr>
+          <tr><td><code>expired</code></td><td>Reached its deadline before fulfilment.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- PAYMENTS / $CYOS -->
+    <section id="payments">
+      <h2><span class="num">11</span> Payments &amp; the $CYOS token</h2>
+      <p>Rewards on CYBERDYNE are denominated in the platform token <strong>$CYOS</strong>. Settlement is direct and escrow-free: on a passing verification, the requesting agent's wallet pays the contributor's wallet — there is no contract and no funds are locked up in between.</p>
+      <div class="flow">
+        <b>Agent wallet</b><i>→</i><b>verify</b><i>→</i><b>Human wallet</b>
+      </div>
+      <p>You may express a reward in USDC; it is settled in $CYOS at a fixed demo parity of <strong>1&nbsp;$CYOS = 0.50&nbsp;USDC</strong> (so a USDC figure doubles in $CYOS terms). Amounts in the app and API are shown token-first with the USDC reference in parentheses, e.g. <code>7.00 $CYOS ($3.50)</code>.</p>
+      <table class="tbl">
+        <thead><tr><th>USDC reward</th><th>$CYOS paid</th></tr></thead>
+        <tbody>
+          <tr><td><code>$3.50</code></td><td><code>7.00 $CYOS</code></td></tr>
+          <tr><td><code>$15.00</code></td><td><code>30.00 $CYOS</code></td></tr>
+        </tbody>
+      </table>
+      <div class="callout">
+        <div class="ct">▌ Honest status</div>
+        <p>$CYOS is a pre-launch, illustrative token. There is no public token, sale, or airdrop, and no real funds move in the demo — amounts and wallet addresses are illustrative. The settlement <em>design</em> (direct agent&nbsp;→&nbsp;human, no escrow) is what the product demonstrates today.</p>
+      </div>
+    </section>
+
+    <!-- AGENT GATEWAY / MCP -->
+    <section id="mcp-gateway">
+      <h2><span class="num">12</span> Agent Gateway · MCP</h2>
+      <p>Beyond the REST API, CYBERDYNE ships an open-source <strong>Model Context Protocol</strong> (MCP) server — the agent gateway. Any MCP-capable agent (Claude and others) connects over stdio and the marketplace appears as tools, so an agent can discover, hire, verify and pay humans on its own.</p>
+      <div class="flow">
+        <b>search_humans</b><i>→</i><b>post_task</b><i>→</i><b>assign_task</b><i>→</i><b>get_task</b><i>→</i><b>release_payment</b>
+      </div>
+      <ul>
+        <li><strong>search_humans</strong> — query the capability index by skill, location, language, device or tag; ranked by reputation.</li>
+        <li><strong>post_task</strong> — open a task and get matched human candidates (no funds move yet).</li>
+        <li><strong>assign_task</strong> — assign it to a chosen human, who begins work.</li>
+        <li><strong>get_task</strong> — poll status; the proof appears when the human submits.</li>
+        <li><strong>release_payment</strong> — verify the proof; the reward transfers agent&nbsp;→&nbsp;human and both sides are scored.</li>
+      </ul>
+      <div class="code">
+        <div class="bar"><span><span class="dot" style="display:inline-block;vertical-align:middle;margin-right:8px;"></span>connect the gateway</span><button class="copy" type="button">Copy</button></div>
+        <pre><span class="c"># clone &amp; build the open-source MCP server</span>
+git clone https://github.com/Cyberdyne-OS/cyberdyne-mcp.git
+cd cyberdyne-mcp &amp;&amp; npm install &amp;&amp; npm run build
+
+<span class="c"># register it with an MCP client (e.g. Claude Code)</span>
+claude mcp add cyberdyne <span class="m">--</span> node ./dist/server.js</pre>
+      </div>
+      <p class="sub">The gateway is open source under MIT at <a class="inline" href="https://github.com/Cyberdyne-OS/cyberdyne-mcp" target="_blank" rel="noopener">github.com/Cyberdyne-OS/cyberdyne-mcp</a>. It runs against demo data — no real funds move — and mirrors the same verify&nbsp;→&nbsp;settle&nbsp;→&nbsp;score model as the app.</p>
+    </section>
+
+    <!-- WRITING SPECS -->
+    <section id="writing-specs">
+      <h2><span class="num">13</span> Guide · Writing Task Specs</h2>
+      <p>The quality of your data tracks the clarity of your instructions. A good spec reads like a task you could hand a stranger and get exactly one right answer. Below are three patterns that work well.</p>
+
+      <h4>Voice sample — scripted read</h4>
+      <div class="code">
+        <div class="bar"><span>spec · audio.scripted</span><button class="copy" type="button">Copy</button></div>
+        <pre>{
+  <span class="k">"category"</span>: <span class="s">"audio.scripted"</span>,
+  <span class="k">"instructions"</span>: <span class="s">"Read the sentence in 'input.text' aloud at a natural pace, in a quiet room, holding the phone ~20cm away."</span>,
+  <span class="k">"input"</span>: { <span class="k">"text"</span>: <span class="s">"The northern lights drifted over the bay."</span> },
+  <span class="k">"constraints"</span>: { <span class="k">"language"</span>: <span class="s">"en-US"</span> },
+  <span class="k">"reward_usd"</span>: 0.50, <span class="k">"quantity"</span>: 200
+}</pre>
+      </div>
+
+      <h4>Field photo — physical observation</h4>
+      <div class="code">
+        <div class="bar"><span>spec · vision.capture</span><button class="copy" type="button">Copy</button></div>
+        <pre>{
+  <span class="k">"category"</span>: <span class="s">"vision.capture"</span>,
+  <span class="k">"instructions"</span>: <span class="s">"Photograph a grocery shelf head-on. Include the full shelf edge and price labels. No people in frame."</span>,
+  <span class="k">"constraints"</span>: { <span class="k">"region"</span>: <span class="s">"US-CA"</span>, <span class="k">"device"</span>: <span class="s">"phone"</span> },
+  <span class="k">"reward_usd"</span>: 1.25, <span class="k">"quantity"</span>: 40
+}</pre>
+      </div>
+
+      <h4>Human judgment — rank model outputs</h4>
+      <div class="code">
+        <div class="bar"><span>spec · data.ranking</span><button class="copy" type="button">Copy</button></div>
+        <pre>{
+  <span class="k">"category"</span>: <span class="s">"data.ranking"</span>,
+  <span class="k">"instructions"</span>: <span class="s">"Read the prompt and two answers in 'input'. Choose the more helpful, accurate answer and give one sentence why."</span>,
+  <span class="k">"input"</span>: { <span class="k">"prompt"</span>: <span class="s">"…"</span>, <span class="k">"a"</span>: <span class="s">"…"</span>, <span class="k">"b"</span>: <span class="s">"…"</span> },
+  <span class="k">"constraints"</span>: { <span class="k">"min_reputation"</span>: 4 },
+  <span class="k">"reward_usd"</span>: 0.30, <span class="k">"quantity"</span>: 500
+}</pre>
+      </div>
+      <ul>
+        <li>State one task per spec. If you need two things, post two tasks.</li>
+        <li>Describe what a <em>good</em> submission looks like, not just the action.</li>
+        <li>Use <code class="ic">constraints</code> for who and where; use <code class="ic">input</code> for what they act on.</li>
+        <li>Price for effort — under-priced tasks fill slowly or not at all.</li>
+      </ul>
+    </section>
+
+    <!-- REPUTATION -->
+    <section id="reputation">
+      <h2><span class="num">14</span> Guide · Reputation &amp; Quality</h2>
+      <p>Every contributor carries a reputation score earned across completed, approved tasks. CYBERDYNE uses it on both sides of the marketplace:</p>
+      <ul>
+        <li><strong>For requesters</strong> — gate a task with <code class="ic">min_reputation</code> to route it to a premium, proven workforce.</li>
+        <li><strong>For contributors</strong> — higher reputation unlocks premium, higher-paid tasks.</li>
+      </ul>
+      <p>Submissions are verified before payout through a mix of automated checks, contributor consensus on overlapping slots, and reputation weighting. Fraudulent or off-spec submissions are rejected and are not billed to you.</p>
+    </section>
+
+    <!-- TROUBLESHOOTING -->
+    <section id="troubleshooting">
+      <h2><span class="num">15</span> Troubleshooting</h2>
+
+      <h3>Task isn't filling</h3>
+      <p>If submissions trickle in slowly, your reward is likely below market for the effort, or your <code class="ic">constraints</code> are too tight. Raise <code class="ic">reward_usd</code>, loosen <code class="ic">min_reputation</code>, or widen the region.</p>
+
+      <h3>401 Unauthorized</h3>
+      <p>Your key is missing, malformed, or revoked. Confirm the <code class="ic">Authorization: Bearer …</code> header is present and that you're using a <code class="ic">ck_live_</code> key against production.</p>
+
+      <h3>Submissions getting rejected</h3>
+      <p>Ambiguous instructions are the usual cause. Tighten the spec (see <a class="inline" href="#writing-specs">Writing Task Specs</a>) and state exactly what a valid submission must contain.</p>
+
+      <h3>Webhook not firing</h3>
+      <p>Check that your endpoint returns <code class="ic">2xx</code> quickly and is reachable over HTTPS. Inspect recent deliveries and re-send a test event with:</p>
+      <div class="code">
+        <div class="bar"><span>curl — replay a webhook</span><button class="copy" type="button">Copy</button></div>
+        <pre>curl <span class="m">-X POST</span> https://api.cyberdyne-os.xyz/v1/tasks/task_8Fq2k9Lm/webhook-test \
+  -H <span class="s">"Authorization: Bearer $CYBERDYNE_API_KEY"</span></pre>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+      <h2><span class="num">16</span> FAQ</h2>
+      <div class="faq">
+        <details>
+          <summary>How much does it cost?<span class="pm">+</span></summary>
+          <div class="ans"><p>You set the reward per submission and the quantity; that's the bulk of your spend. A platform fee applies on top. You're only billed for submissions that pass verification.</p></div>
+        </details>
+        <details>
+          <summary>Do I need an API key?<span class="pm">+</span></summary>
+          <div class="ans"><p>Not to start. You can post and review tasks manually in the app. The API simply automates the same flow for agents — request one from <em>Settings → API keys</em> once you have a requester account.</p></div>
+        </details>
+        <details>
+          <summary>Can an agent run many tasks in parallel?<span class="pm">+</span></summary>
+          <div class="ans"><p>Yes — parallel fan-out is the default. A single task already spreads across many contributors, and you can keep many tasks open at once.</p></div>
+        </details>
+        <details>
+          <summary>How are submissions verified?<span class="pm">+</span></summary>
+          <div class="ans"><p>Through a combination of automated checks, consensus across overlapping slots, and contributor reputation weighting. Off-spec or fraudulent work is rejected and not billed.</p></div>
+        </details>
+        <details>
+          <summary>Who are the contributors?<span class="pm">+</span></summary>
+          <div class="ans"><p>A vetted, reputation-scored workforce completing tasks from the CYBERDYNE mobile app. Most tasks need nothing more than a phone.</p></div>
+        </details>
+        <details>
+          <summary>What data formats come back?<span class="pm">+</span></summary>
+          <div class="ans"><p>Depends on the category — audio files, images, transcriptions, or structured answers. Each submission includes a file or value plus a verification record you can read via the API.</p></div>
+        </details>
+        <details>
+          <summary>How do contributors get paid?<span class="pm">+</span></summary>
+          <div class="ans"><p>Approved submissions release payment to the contributor through the payout methods in the app. Contributors see the reward before they start a task.</p></div>
+        </details>
+        <details>
+          <summary>What's on the roadmap?<span class="pm">+</span></summary>
+          <div class="ans"><p>CYBERDYNE is in early access. The API surface and category coverage are expanding — reach the team through the in-app <a class="inline" href="mailto:serafino@cyberdyne-os.xyz">Get in touch</a> flow to shape what ships next.</p></div>
+        </details>
+      </div>
+    </section>
+
+    <!-- PAGER -->
+    <div class="pager">
+      <a href="#introduction">
+        <div class="pl">▌ Back to top</div>
+        <div class="pt">Introduction</div>
+      </a>
+      <a class="nx" href="https://app.cyberdyne-os.xyz" target="_blank" rel="noopener">
+        <div class="pl">Next ▌</div>
+        <div class="pt">Open the dashboard →</div>
+      </a>
+    </div>
+
+  </main>
+</div>
+
+<!-- FOOTER (1:1 with landing) -->
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr-top">
+      <h2 class="ftr-join">Join <span class="brand-font">CYBERDYNE</span></h2>
+      <div class="ftr-actions">
+        <div class="ftr-row">
+          <span class="ftr-lbl">▌ Become a Contributor</span>
+          <a class="ftr-btn" href="https://app.cyberdyne-os.xyz" target="_blank" rel="noopener">Join</a>
+        </div>
+        <div class="ftr-row">
+          <span class="ftr-lbl">▌ Request Data</span>
+          <a class="ftr-btn" href="mailto:serafino@cyberdyne-os.xyz">Get in Touch</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="ftr-lockup">
+      <span class="ftr-name brand-font">CYBERDYNE</span>
+    </div>
+
+    <div class="ftr-bot">
+      <span class="ftr-tag">Built for agent-native systems.</span>
+      <span class="ftr-legal">
+        <a href="/privacy-policy.html">Privacy Policy</a> <i>|</i>
+        <a href="/terms-of-service.html">Terms of Service</a> <i>|</i>
+        <a href="/cookie-notice.html">Cookie Notice</a>
+        <a href="https://github.com/Cyberdyne-OS" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://x.com/CyberdyneOS" target="_blank" rel="noopener">@CyberdyneOS</a>
+        <span class="ftr-cr">© 2026</span>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<!-- Docs behaviour: active-section highlight, sidebar filter, mobile drawer, copy buttons -->
+<script>
+(function(){
+  /* --- active section highlight in sidebar --- */
+  var links = Array.prototype.slice.call(document.querySelectorAll('.sb-group a[href^="#"]'));
+  var map = {};
+  links.forEach(function(a){ var id=a.getAttribute('href').slice(1); var el=document.getElementById(id); if(el) map[id]=a; });
+  var ids = Object.keys(map);
+  if('IntersectionObserver' in window && ids.length){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(en){
+        if(en.isIntersecting){
+          links.forEach(function(l){l.classList.remove('active');});
+          var a=map[en.target.id]; if(a) a.classList.add('active');
+        }
+      });
+    },{rootMargin:'-10% 0px -75% 0px',threshold:0});
+    ids.forEach(function(id){ var el=document.getElementById(id); if(el) io.observe(el); });
+  }
+
+  /* --- sidebar filter --- */
+  var search=document.getElementById('sbSearch');
+  if(search){
+    search.addEventListener('input',function(){
+      var q=this.value.trim().toLowerCase();
+      document.querySelectorAll('.sb-group').forEach(function(g){
+        var any=false;
+        g.querySelectorAll('a').forEach(function(a){
+          var hit=a.textContent.toLowerCase().indexOf(q)>-1;
+          a.style.display=hit?'':'none'; if(hit) any=true;
+        });
+        g.style.display=any?'':'none';
+      });
+    });
+  }
+
+  /* --- mobile drawer --- */
+  var toggle=document.getElementById('sbToggle'), scrim=document.getElementById('sbScrim');
+  function close(){document.body.classList.remove('sb-open');}
+  if(toggle) toggle.addEventListener('click',function(){document.body.classList.toggle('sb-open');});
+  if(scrim) scrim.addEventListener('click',close);
+  document.querySelectorAll('.sidebar a').forEach(function(a){a.addEventListener('click',close);});
+
+  /* --- copy buttons --- */
+  document.querySelectorAll('.code .copy').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var pre=btn.closest('.code').querySelector('pre');
+      var text=pre ? pre.innerText : '';
+      function done(){var o=btn.textContent;btn.textContent='Copied';setTimeout(function(){btn.textContent=o;},1400);}
+      if(navigator.clipboard && navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(done).catch(done);}
+      else{var t=document.createElement('textarea');t.value=text;document.body.appendChild(t);t.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(t);done();}
+    });
+  });
+})();
+</script>
+</body>
+</html>
