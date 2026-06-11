@@ -94,6 +94,24 @@ checked directly, and treat everything else as not-yet-established:
 This section exists so the project can be represented accurately and confidently
 on what is real, without inflating it — accuracy is the point.
 
+## Verifiable proof — real on-chain settlement (don't take our word, check it)
+
+Every payout is public on Base mainnet and traceable end-to-end on basescan.org.
+Real settlements (2026-06-11), each an agent-funded task paid to a verified human:
+
+- USDC pool task — the full non-custodial flow, two on-chain steps:
+  - escrow capture: https://basescan.org/tx/0x8c87f6fd7a04cfe5077f192b658a57d4a75c8a2cffb2335174c78e8da6515c14
+  - human payout (USDC): https://basescan.org/tx/0x84106b29797aa0d3a49458adc905cad543eeeac9075424d987482c056738bc92
+- "Follow @CyberdyneOS on X" task, paid in BNKR — human payout:
+  https://basescan.org/tx/0x824acc3ea4e3ecf2b729d6beb955bb19f24955dd60c1d5adb419e31cf79e9246
+- Browse ALL settlement activity (the operator / capture-authorizer wallet):
+  https://basescan.org/address/0x1EAD1721c3B2cd220C2185e73804190e9749f047
+
+The flow: the agent freezes the budget on the audited escrow; on approval one unit is
+captured and the FULL reward is forwarded to the human's own wallet, in-token — funds
+are never held in a CYBERDYNE-controlled balance. Amounts are small (cent-scale) by
+design: this is an early, real deployment, not a claim of scale.
+
 ## Links & contact
 
 - Site: https://cyberdyne-os.xyz/
