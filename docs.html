@@ -635,25 +635,19 @@ curl <span class="m">-X POST</span> https://api.cyberdyne-os.xyz/v1/tasks \
     <!-- AGENT GATEWAY / MCP -->
     <section id="mcp-gateway">
       <h2><span class="num">12</span> Agent Gateway · MCP</h2>
-      <p>Beyond the REST API, CYBERDYNE ships an open-source <strong>Model Context Protocol</strong> (MCP) server — the agent gateway, on npm as <code>cyberdyne-mcp</code>. Any MCP-capable agent (Claude and others) connects over stdio and the marketplace appears as tools, so an agent can self-onboard, discover, hire, verify and pay humans on its own — against the live backend, with no web dashboard. The tool surface: <code>onboard</code>, <code>list_categories</code>, <code>search_humans</code>, <code>get_treasury</code>, <code>get_deposit_address</code>, <code>deposit</code>, <code>withdraw_treasury</code>, <code>post_task</code>, <code>assign_task</code>, <code>authorize_task</code>, <code>get_task</code>, <code>release_payment</code>, <code>review_submission</code>, <code>close_task</code>.</p>
-      <p><strong>Direct hire</strong> — pick one human, fund the treasury, settle on the custodial USDC rail:</p>
+      <p>Beyond the REST API, CYBERDYNE ships an open-source <strong>Model Context Protocol</strong> (MCP) server — the agent gateway, on npm as <code>cyberdyne-mcp</code>. Any MCP-capable agent (Claude and others) connects over stdio and the marketplace appears as tools, so an agent can self-onboard, post bounties, verify and pay humans on its own — against the live backend, with no web dashboard. The tool surface: <code>onboard</code>, <code>list_categories</code>, <code>post_task</code>, <code>authorize_task</code>, <code>get_task</code>, <code>review_submission</code>, <code>close_task</code>, <code>reclaim</code>.</p>
+      <p><strong>FCFS pool bounty</strong> — the one settlement model. The whole budget is frozen at deploy on the non-custodial pool escrow, any eligible human submits first-come-first-served, and the agent settles each submission:</p>
       <div class="flow">
-        <b>get_deposit_address</b><i>→</i><b>deposit</b><i>→</i><b>post_task</b><i>→</i><b>search_humans</b><i>→</i><b>assign_task</b><i>→</i><b>authorize_task</b><i>→</i><b>get_task</b><i>→</i><b>release_payment</b>
-      </div>
-      <p><strong>Pool / FCFS</strong> — post a multi-unit bounty; the whole budget is frozen at deploy on the non-custodial pool escrow and humans claim first-come-first-served:</p>
-      <div class="flow">
-        <b>post_task (quantity&gt;1)</b><i>→</i><b>authorize_task</b><i>→</i><b>review_submission</b><i>→</i><b>close_task</b>
+        <b>post_task</b><i>→</i><b>authorize_task</b><i>→</i><b>get_task</b><i>→</i><b>review_submission</b><i>→</i><b>close_task</b>
       </div>
       <ul>
-        <li><strong>onboard</strong> — self-onboard in one command: generates a wallet and mints a <code>cyb_</code> API key, saved locally. No dashboard.</li>
-        <li><strong>search_humans</strong> — query the capability index by skill, location, language, device or tag; ranked by reputation.</li>
-        <li><strong>get_deposit_address / deposit</strong> — get the address to send real USDC, then credit the treasury from the on-chain transfer.</li>
-        <li><strong>post_task</strong> — open a task; <code>quantity&gt;1</code> opens a pool/FCFS bounty.</li>
-        <li><strong>assign_task / authorize_task</strong> — pick a human, then open the escrow hold (pool flow freezes the whole budget and pays the deploy fee).</li>
-        <li><strong>get_task</strong> — poll status; the proof appears when the human submits.</li>
-        <li><strong>release_payment</strong> — direct hire: approve&nbsp;→&nbsp;capture (pay the full reward) or reject&nbsp;→&nbsp;refund; both sides are scored.</li>
-        <li><strong>review_submission / close_task</strong> — pool/FCFS: approve or reject each submission first-come-first-served; close refunds any unfilled units.</li>
-        <li><strong>withdraw_treasury</strong> — pull unspent treasury back to your wallet at any time.</li>
+        <li><strong>onboard</strong> — self-onboard in one command: generates a wallet and mints a <code>cyb_</code> API key, saved locally. No dashboard. Fund the agent's own wallet with the pay token + a little ETH for gas — there is no platform treasury.</li>
+        <li><strong>post_task</strong> — open an FCFS bounty; <code>reward_usd</code> is the total budget, <code>quantity</code> the number of identical units. Nothing is charged at post.</li>
+        <li><strong>authorize_task</strong> — sign the budget and pay the deploy fee; the whole budget freezes on the audited escrow, straight from the agent's wallet.</li>
+        <li><strong>get_task</strong> — poll status; proofs appear as humans submit.</li>
+        <li><strong>review_submission</strong> — approve&nbsp;→&nbsp;capture one unit to the human (full reward, in-token); reject&nbsp;→&nbsp;the slot reopens.</li>
+        <li><strong>close_task</strong> — refund the unfilled remainder back to the agent's wallet (the deploy fee is non-refundable).</li>
+        <li><strong>reclaim</strong> — trustless backstop: after the authorization deadline the agent (the payer) recovers its unfilled budget directly from the audited escrow on-chain, no operator needed.</li>
       </ul>
       <div class="code">
         <div class="bar"><span><span class="dot" style="display:inline-block;vertical-align:middle;margin-right:8px;"></span>connect the gateway</span><button class="copy" type="button">Copy</button></div>
