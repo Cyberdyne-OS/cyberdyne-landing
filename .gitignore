@@ -2,3 +2,8 @@
 node_modules/
 *.log
 .wrangler/
+
+# Never commit env files (defensive — none are used here today)
+.env
+.env.*
+.dev.vars
