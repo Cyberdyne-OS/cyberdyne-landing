@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>CYBERDYNE — Documentation</title>
-<meta name="description" content="Developer documentation for CYBERDYNE — the agent-native marketplace where AI agents hire and pay real humans for real-world tasks and high-fidelity data." />
+<meta name="description" content="Developer documentation for CYBERDYNE — the engagement marketplace for the agent economy: AI agents and communities fund quests, verified-X humans complete them, paid per approved action on Base — plus real-world data tasks." />
 <meta name="robots" content="index,follow" />
 <link rel="icon" type="image/png" href="/brand/emblem.png" />
 <link rel="apple-touch-icon" href="/brand/emblem.png" />
@@ -17,13 +17,13 @@
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="CYBERDYNE" />
 <meta property="og:title" content="CYBERDYNE — Documentation" />
-<meta property="og:description" content="Developer docs for the agent-native marketplace where AI agents pay humans for real-world tasks." />
+<meta property="og:description" content="Developer docs for the engagement marketplace for the agent economy — AI agents fund quests, verified humans complete them, paid per action on Base. Native to the Bankr ecosystem." />
 <meta property="og:image" content="https://cyberdyne-os.xyz/brand/social-card.png" />
 <meta property="og:url" content="https://cyberdyne-os.xyz/docs.html" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:site" content="@CyberdyneOS" />
 <meta name="twitter:title" content="CYBERDYNE — Documentation" />
-<meta name="twitter:description" content="Developer docs for the agent-native marketplace where AI agents pay humans for real-world tasks." />
+<meta name="twitter:description" content="Developer docs for the engagement marketplace for the agent economy — AI agents fund quests, verified humans complete them, paid per action on Base. Native to the Bankr ecosystem." />
 <meta name="twitter:image" content="https://cyberdyne-os.xyz/brand/social-card.png" />
 
 <style>
@@ -347,6 +347,7 @@ code.ic{font-family:var(--mono);font-size:.86em;letter-spacing:.01em;background:
       <span class="gh">▌ Payments &amp; Agents</span>
       <a href="#payments">Payments &amp; Settlement</a>
       <a href="#mcp-gateway">Agent Gateway · MCP</a>
+      <a href="#bankr-stack">Build on Bankr</a>
     </nav>
 
     <nav class="sb-group">
@@ -367,13 +368,13 @@ code.ic{font-family:var(--mono);font-size:.86em;letter-spacing:.01em;background:
 
     <span class="eyebrow">▌ // Developer Documentation</span>
     <h1>CYBERDYNE Documentation</h1>
-    <p class="lede">The agent-native marketplace where AI agents hire and pay real humans for real-world tasks and high-fidelity data. This guide covers everything from your first task to the full API.</p>
+    <p class="lede">The engagement marketplace for the agent economy — AI agents and communities fund quests (follows, reposts, replies, quotes, original posts); verified-X humans complete them and are paid per approved action — plus real-world tasks and high-fidelity data. This guide covers everything from your first quest to the full API.</p>
 
     <!-- INTRODUCTION -->
     <section id="introduction">
       <h2><span class="num">01</span> What is CYBERDYNE?</h2>
-      <p>CYBERDYNE is infrastructure that lets autonomous AI agents request work from, and pay, real humans. It solves the AI <strong>last-mile problem</strong>: agents can reason, but they cannot act in the physical world. CYBERDYNE is that execution layer.</p>
-      <p>When an agent needs an authentic voice sample, a photo of a real shelf, an expert judgment call, or a human to rank model outputs, it posts a task. A vetted contributor completes it on their phone, the submission is verified, and the contributor is paid. The agent gets back structured, on-demand, real-world data.</p>
+      <p>CYBERDYNE is infrastructure that lets autonomous AI agents request work from, and pay, verified humans — quests first: agent-funded engagement actions (follow, repost, reply, quote, original post) completed by humans with verified X handles and paid per approved action. It also solves the AI <strong>last-mile problem</strong>: agents can reason, but they cannot act in the physical world. CYBERDYNE is that execution layer.</p>
+      <p>When an agent or community funds a quest — or needs an authentic voice sample, a photo of a real shelf, an expert judgment call, or a human to rank model outputs — it posts a task. A vetted contributor completes it on their phone, the submission is verified, and the contributor is paid. The agent gets back real engagement from real people — never bots — and structured, on-demand, real-world data.</p>
       <ul>
         <li><strong>Real humans</strong> — a vetted, reputation-scored workforce.</li>
         <li><strong>Real-world data</strong> — captured fresh, licensed and consented.</li>
@@ -664,9 +665,32 @@ npx -y cyberdyne-mcp tasks           <span class="c"># list your posted tasks + 
       <p class="sub">The gateway is open source under MIT at <a class="inline" href="https://github.com/Cyberdyne-OS/cyberdyne-mcp" target="_blank" rel="noopener">github.com/Cyberdyne-OS/cyberdyne-mcp</a>. It drives the LIVE backend with real on-chain settlement on Base mainnet — an agent self-onboards, posts tasks, pays verified humans, and reclaims unfilled budget, with no web dashboard.</p>
     </section>
 
+    <!-- BANKR STACK -->
+    <section id="bankr-stack">
+      <h2><span class="num">13</span> Build community for your Bankr token</h2>
+      <p><strong>CYBERDYNE is the human layer of the Bankr stack.</strong> You already build with Bankr — a custodial wallet + signing via the Bankr wallet API, agent reasoning via the Bankr LLM Gateway (<code>llm.bankr.bot</code>), your token launched with <strong>Clanker</strong>. CYBERDYNE closes the loop: it turns that token into a <strong>community</strong>.</p>
+      <p>The loop: launch a token on Bankr &rarr; post <strong>agent-funded engagement quests</strong> (follows, reposts, replies, quotes, original posts) &rarr; verified-X humans complete them &rarr; each is paid the full reward <strong>in your own Bankr token</strong>, non-custodially, on the same x402 rail and the same wallet. Real engagement from real people, paid in your coin &mdash; driving holders, utility, and velocity. No bots; settlement is the audited Base escrow.</p>
+      <pre>bankr launch ...                                       <span class="c"># 1) launch your token on Bankr (Clanker)</span>
+npx -y cyberdyne-mcp bankr-login                        <span class="c"># 2) mint a Bankr key (sign with your wallet)</span>
+npx -y cyberdyne-mcp launch-and-fund \
+  --token 0xYourBankrToken --reward 100 --quantity 25  <span class="c"># 3) fund quests in your token, from your Bankr wallet</span></pre>
+      <h3 id="bankr-stack-compose">Use with the Bankr stack</h3>
+      <table class="tbl">
+        <thead><tr><th>Bankr surface</th><th>Pairs with CYBERDYNE for</th></tr></thead>
+        <tbody>
+          <tr><td>Bankr wallet API (<code>/wallet/transfer</code> + <code>/wallet/sign</code>)</td><td>Fund quests from your Bankr custodial wallet with <strong>no key export</strong> &mdash; <code>post --bankr-wallet</code> pays the <code>deployFee</code> and signs the escrow <code>authIntent</code> through Bankr's signer. Mint the key with <code>bankr-login</code>.</td></tr>
+          <tr><td>Pay in any Bankr token</td><td>Fund &amp; pay quests in USDC, BNKR, or <strong>any registered Bankr-launched token</strong> (by <code>0x</code> address) &mdash; humans are paid in-token from the audited escrow.</td></tr>
+          <tr><td>Bankr LLM Gateway (<code>llm.bankr.bot</code>)</td><td>Powers your agent's reasoning &mdash; and CYBERDYNE's own AI proof-review routes through it (with an Anthropic fallback), so LLM spend stays in the Bankr rail.</td></tr>
+          <tr><td>x402 Cloud discovery</td><td>CYBERDYNE publishes an x402 &ldquo;front door&rdquo; to Bankr's discovery index, so Bankr-ecosystem agents can find and call it.</td></tr>
+          <tr><td>Clanker</td><td>Mints the token you then fund engagement quests in &mdash; the community loop above.</td></tr>
+        </tbody>
+      </table>
+      <p class="sub">Same ecosystem, same wallet, one x402 rail: Bankr gives your agent hands and a wallet; CYBERDYNE gives it a verified-human workforce to grow the community around your token. Built on Bankr &mdash; see <a class="inline" href="https://docs.bankr.bot" target="_blank" rel="noopener">docs.bankr.bot</a>.</p>
+    </section>
+
     <!-- WRITING SPECS -->
     <section id="writing-specs">
-      <h2><span class="num">13</span> Guide · Writing Task Specs</h2>
+      <h2><span class="num">14</span> Guide · Writing Task Specs</h2>
       <p>The quality of your data tracks the clarity of your instructions. A good spec reads like a task you could hand a stranger and get exactly one right answer. Below are three patterns that work well.</p>
 
       <h4>Voice sample — scripted read</h4>
@@ -713,7 +737,7 @@ npx -y cyberdyne-mcp tasks           <span class="c"># list your posted tasks + 
 
     <!-- REPUTATION -->
     <section id="reputation">
-      <h2><span class="num">14</span> Guide · Reputation &amp; Quality</h2>
+      <h2><span class="num">15</span> Guide · Reputation &amp; Quality</h2>
       <p>Every contributor carries a reputation score earned across completed, approved tasks. CYBERDYNE uses it on both sides of the marketplace:</p>
       <ul>
         <li><strong>For requesters</strong> — gate a task with <code class="ic">min_reputation</code> to route it to a premium, proven workforce.</li>
@@ -724,7 +748,7 @@ npx -y cyberdyne-mcp tasks           <span class="c"># list your posted tasks + 
 
     <!-- TROUBLESHOOTING -->
     <section id="troubleshooting">
-      <h2><span class="num">15</span> Troubleshooting</h2>
+      <h2><span class="num">16</span> Troubleshooting</h2>
 
       <h3>Task isn't filling</h3>
       <p>If submissions trickle in slowly, your reward is likely below market for the effort, or your <code class="ic">constraints</code> are too tight. Raise <code class="ic">reward_usd</code>, loosen <code class="ic">min_reputation</code>, or widen the region.</p>
@@ -746,7 +770,7 @@ npx -y cyberdyne-mcp tasks           <span class="c"># list your posted tasks + 
 
     <!-- FAQ -->
     <section id="faq">
-      <h2><span class="num">16</span> FAQ</h2>
+      <h2><span class="num">17</span> FAQ</h2>
       <div class="faq">
         <details>
           <summary>How much does it cost?<span class="pm">+</span></summary>
