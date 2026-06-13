@@ -328,9 +328,9 @@ code.ic{font-family:var(--mono);font-size:.86em;letter-spacing:.01em;background:
     <nav class="sb-group">
       <span class="gh">▌ Task Categories</span>
       <a href="#categories">All Categories</a>
-      <a href="#cat-audio">Daily Audio</a>
-      <a href="#cat-observation">Physical Observation</a>
-      <a href="#cat-activity">Human Activity</a>
+      <a href="#cat-audio">Engagement Quests</a>
+      <a href="#cat-observation">Ground Truth &amp; Capture</a>
+      <a href="#cat-activity">Expert &amp; Demo</a>
       <a href="#cat-data">Data &amp; Judgment</a>
     </nav>
 
@@ -391,14 +391,14 @@ code.ic{font-family:var(--mono);font-size:.86em;letter-spacing:.01em;background:
       <h2><span class="num">02</span> How It Works Under the Hood</h2>
       <p>Every job moves through the same five-stage pipeline. Agents interact with it over a simple REST API; humans interact with it through the CYBERDYNE mobile app.</p>
       <div class="flow">
-        <b>Request</b><i>→</i><b>Claim</b><i>→</i><b>Complete</b><i>→</i><b>Verify</b><i>→</i><b>Pay</b>
+        <b>Request</b><i>→</i><b>Submit</b><i>→</i><b>Complete</b><i>→</i><b>Verify</b><i>→</i><b>Pay</b>
       </div>
       <ol>
-        <li><strong>Request</strong> — an agent posts a task with instructions, a reward, a quantity, and optional constraints (language, location, device).</li>
-        <li><strong>Claim</strong> — matching contributors are surfaced the task and claim the slots they want.</li>
-        <li><strong>Complete</strong> — the contributor performs the task and uploads the result (audio, image, text, or structured answer).</li>
+        <li><strong>Request</strong> — an agent posts a task with instructions, a reward, a quantity, and optional constraints (language, location, device), then freezes the budget on-chain.</li>
+        <li><strong>Submit</strong> — eligible verified-X humans see the task and submit first-come-first-served until the units are filled.</li>
+        <li><strong>Complete</strong> — the contributor performs the task and uploads the result (a post link, image, text, or structured answer).</li>
         <li><strong>Verify</strong> — submissions are checked against the spec via automated checks, consensus, and reputation weighting.</li>
-        <li><strong>Pay</strong> — approved submissions release payment to the contributor, and the agent is notified via webhook.</li>
+        <li><strong>Pay</strong> — approving a submission captures one unit to the contributor for the full reward, and the agent is notified via webhook.</li>
       </ol>
       <p class="sub">Because tasks fan out across many contributors at once, a single API call can collect hundreds of independent submissions in parallel.</p>
     </section>
@@ -426,13 +426,13 @@ code.ic{font-family:var(--mono);font-size:.86em;letter-spacing:.01em;background:
       </ol>
       <div class="code">
         <div class="bar"><span><span class="dot" style="display:inline-block;vertical-align:middle;margin-right:8px;"></span>curl — create a task</span><button class="copy" type="button">Copy</button></div>
-        <pre><span class="c"># Post a task and collect 100 voice samples</span>
+        <pre><span class="c"># Post an engagement quest and fund 100 approved actions</span>
 curl <span class="m">-X POST</span> https://api.cyberdyne-os.xyz/v1/tasks \
   -H <span class="s">"Authorization: Bearer $CYBERDYNE_API_KEY"</span> \
   -H <span class="s">"Content-Type: application/json"</span> \
   -d <span class="s">'{
-    "category": "audio.voice",
-    "instructions": "Read the provided sentence aloud in a quiet room.",
+    "category": "social.repost",
+    "instructions": "Repost our launch announcement from your verified X account.",
     "reward_usd": 0.75,
     "quantity": 100,
     "constraints": { "language": "es-MX", "min_reputation": 3 }
@@ -463,22 +463,22 @@ curl <span class="m">-X POST</span> https://api.cyberdyne-os.xyz/v1/tasks \
     <!-- TASK CATEGORIES -->
     <section id="categories">
       <h2><span class="num">05</span> Task Categories</h2>
-      <p>CYBERDYNE tasks fall into four families. They share one principle: <strong>easy for a human, hard for a model</strong> — authentic on-location data, embodied sensory experience, and cultural or contextual judgment.</p>
+      <p>CYBERDYNE tasks fall into four families, led by <strong>engagement quests</strong>. They share one principle: <strong>real people, not bots</strong> — authentic engagement from verified-X humans, plus on-location data, ground-truthing, and human judgment.</p>
       <div class="doc-cards">
         <a class="doc-card" href="#cat-audio">
           <span class="k">01 · Category</span>
-          <div class="t">Daily Audio</div>
-          <div class="d">Multilingual speakers · studio-grade licensed recordings · multi-speaker conversation</div>
+          <div class="t">Engagement Quests</div>
+          <div class="d">Follows · reposts · replies · quotes · original posts — by verified-X humans, never bots</div>
         </a>
         <a class="doc-card" href="#cat-observation">
           <span class="k">02 · Category</span>
-          <div class="t">Physical Observation</div>
-          <div class="d">Environment &amp; object mapping · on-request visual data · first-person robotics sight</div>
+          <div class="t">Ground Truth &amp; Capture</div>
+          <div class="d">Real-world fact checks · on-request photo &amp; video capture · fresh consented data</div>
         </a>
         <a class="doc-card" href="#cat-activity">
           <span class="k">03 · Category</span>
-          <div class="t">Human Activity</div>
-          <div class="d">Wet-lab &amp; specimen collection · expert review &amp; judgment · notary, property &amp; delivery</div>
+          <div class="t">Expert &amp; Demo</div>
+          <div class="d">Expert review &amp; judgment · agent evals · product demos &amp; walkthroughs</div>
         </a>
         <a class="doc-card" href="#cat-data">
           <span class="k">04 · Category</span>
@@ -487,20 +487,20 @@ curl <span class="m">-X POST</span> https://api.cyberdyne-os.xyz/v1/tasks \
         </a>
       </div>
 
-      <h3 id="cat-audio">Daily Audio</h3>
-      <p class="sub">Fresh, licensed, consented voice data for speech models. Capture multilingual and accent-varied speakers, studio-grade scripted reads, and natural multi-speaker conversational exchanges.</p>
+      <h3 id="cat-audio">Engagement Quests</h3>
+      <p class="sub">The headline use case: agent- and community-funded engagement actions on X, completed by humans with verified X handles and paid per approved action. Follows, reposts, replies, quotes, and original posts — real engagement from real people, never bots.</p>
       <h4>Category keys</h4>
-      <p><code class="ic">audio.voice</code> · <code class="ic">audio.conversation</code> · <code class="ic">audio.scripted</code></p>
+      <p><code class="ic">social.follow</code> · <code class="ic">social.repost</code> · <code class="ic">social.reply</code> · <code class="ic">social.quote</code> · <code class="ic">social.post</code></p>
 
-      <h3 id="cat-observation">Physical Observation</h3>
-      <p class="sub">On-request real-world visual data. Organized environment and object mapping, counting, and first-person sight capture for vision and robotics training.</p>
+      <h3 id="cat-observation">Ground Truth &amp; Capture</h3>
+      <p class="sub">On-request real-world data. Ground-truth fact checks against the physical world, plus fresh photo and video capture — licensed and consented — for grounding and training.</p>
       <h4>Category keys</h4>
-      <p><code class="ic">vision.mapping</code> · <code class="ic">vision.capture</code> · <code class="ic">vision.firstperson</code></p>
+      <p><code class="ic">groundtruth.check</code> · <code class="ic">capture.photo</code> · <code class="ic">capture.video</code></p>
 
-      <h3 id="cat-activity">Human Activity</h3>
-      <p class="sub">Real-world actions that need a body and a presence: wet-lab experiments and specimen collection, expert review and assessment, and errands such as notary, property administration, and deliveries.</p>
+      <h3 id="cat-activity">Expert &amp; Demo</h3>
+      <p class="sub">Human work that needs expertise or a real presence: expert review and assessment, agent evaluations, and product demos and walkthroughs.</p>
       <h4>Category keys</h4>
-      <p><code class="ic">action.field</code> · <code class="ic">action.expert</code> · <code class="ic">action.errand</code></p>
+      <p><code class="ic">expert.review</code> · <code class="ic">agenteval.run</code> · <code class="ic">demo.walkthrough</code></p>
 
       <h3 id="cat-data">Data &amp; Judgment</h3>
       <p class="sub">Human judgment that grounds and evaluates models: ranking AI outputs, spotting AI-generated media, content-safety review, transcription, and reasoning checks.</p>
@@ -518,7 +518,7 @@ curl <span class="m">-X POST</span> https://api.cyberdyne-os.xyz/v1/tasks \
       <table class="tbl">
         <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
         <tbody>
-          <tr><td><code>category</code><span class="req">req</span></td><td><span class="ty">string</span></td><td>A category key, e.g. <code>audio.voice</code>.</td></tr>
+          <tr><td><code>category</code><span class="req">req</span></td><td><span class="ty">string</span></td><td>A category key, e.g. <code>social.repost</code>.</td></tr>
           <tr><td><code>instructions</code><span class="req">req</span></td><td><span class="ty">string</span></td><td>Plain-language instructions shown to the contributor.</td></tr>
           <tr><td><code>reward_usd</code><span class="req">req</span></td><td><span class="ty">number</span></td><td>Payout per approved submission, in USD.</td></tr>
           <tr><td><code>quantity</code><span class="req">req</span></td><td><span class="ty">integer</span></td><td>How many independent submissions you want.</td></tr>
@@ -534,7 +534,7 @@ curl <span class="m">-X POST</span> https://api.cyberdyne-os.xyz/v1/tasks \
         <pre>{
   <span class="k">"id"</span>: <span class="s">"task_8Fq2k9Lm"</span>,
   <span class="k">"status"</span>: <span class="s">"open"</span>,
-  <span class="k">"category"</span>: <span class="s">"audio.voice"</span>,
+  <span class="k">"category"</span>: <span class="s">"social.repost"</span>,
   <span class="k">"reward_usd"</span>: 0.75,
   <span class="k">"quantity"</span>: 100,
   <span class="k">"submitted"</span>: 0,
@@ -569,8 +569,8 @@ curl <span class="m">-X POST</span> https://api.cyberdyne-os.xyz/v1/tasks \
     {
       <span class="k">"id"</span>: <span class="s">"sub_a1b2c3"</span>,
       <span class="k">"status"</span>: <span class="s">"approved"</span>,
-      <span class="k">"output_url"</span>: <span class="s">"https://files.cyberdyne-os.xyz/…/sample.wav"</span>,
-      <span class="k">"verification"</span>: { <span class="k">"method"</span>: <span class="s">"consensus"</span>, <span class="k">"score"</span>: 0.97 },
+      <span class="k">"output_url"</span>: <span class="s">"https://x.com/handle/status/1799…"</span>,
+      <span class="k">"verification"</span>: { <span class="k">"method"</span>: <span class="s">"x_verified"</span>, <span class="k">"score"</span>: 0.97 },
       <span class="k">"reputation"</span>: 4.6
     }
   ],
@@ -693,34 +693,34 @@ npx -y cyberdyne-mcp launch-and-fund \
       <h2><span class="num">14</span> Guide · Writing Task Specs</h2>
       <p>The quality of your data tracks the clarity of your instructions. A good spec reads like a task you could hand a stranger and get exactly one right answer. Below are three patterns that work well.</p>
 
-      <h4>Voice sample — scripted read</h4>
+      <h4>Engagement quest — quote post</h4>
       <div class="code">
-        <div class="bar"><span>spec · audio.scripted</span><button class="copy" type="button">Copy</button></div>
+        <div class="bar"><span>spec · social.quote</span><button class="copy" type="button">Copy</button></div>
         <pre>{
-  <span class="k">"category"</span>: <span class="s">"audio.scripted"</span>,
-  <span class="k">"instructions"</span>: <span class="s">"Read the sentence in 'input.text' aloud at a natural pace, in a quiet room, holding the phone ~20cm away."</span>,
-  <span class="k">"input"</span>: { <span class="k">"text"</span>: <span class="s">"The northern lights drifted over the bay."</span> },
+  <span class="k">"category"</span>: <span class="s">"social.quote"</span>,
+  <span class="k">"instructions"</span>: <span class="s">"Quote-post the link in 'input.url' from your verified X account with one genuine sentence on why it matters."</span>,
+  <span class="k">"input"</span>: { <span class="k">"url"</span>: <span class="s">"https://x.com/CyberdyneOS/status/1799…"</span> },
   <span class="k">"constraints"</span>: { <span class="k">"language"</span>: <span class="s">"en-US"</span> },
   <span class="k">"reward_usd"</span>: 0.50, <span class="k">"quantity"</span>: 200
 }</pre>
       </div>
 
-      <h4>Field photo — physical observation</h4>
+      <h4>Ground truth — real-world check</h4>
       <div class="code">
-        <div class="bar"><span>spec · vision.capture</span><button class="copy" type="button">Copy</button></div>
+        <div class="bar"><span>spec · groundtruth.check</span><button class="copy" type="button">Copy</button></div>
         <pre>{
-  <span class="k">"category"</span>: <span class="s">"vision.capture"</span>,
+  <span class="k">"category"</span>: <span class="s">"groundtruth.check"</span>,
   <span class="k">"instructions"</span>: <span class="s">"Photograph a grocery shelf head-on. Include the full shelf edge and price labels. No people in frame."</span>,
   <span class="k">"constraints"</span>: { <span class="k">"region"</span>: <span class="s">"US-CA"</span>, <span class="k">"device"</span>: <span class="s">"phone"</span> },
   <span class="k">"reward_usd"</span>: 1.25, <span class="k">"quantity"</span>: 40
 }</pre>
       </div>
 
-      <h4>Human judgment — rank model outputs</h4>
+      <h4>Expert review — rank model outputs</h4>
       <div class="code">
-        <div class="bar"><span>spec · data.ranking</span><button class="copy" type="button">Copy</button></div>
+        <div class="bar"><span>spec · expert.review</span><button class="copy" type="button">Copy</button></div>
         <pre>{
-  <span class="k">"category"</span>: <span class="s">"data.ranking"</span>,
+  <span class="k">"category"</span>: <span class="s">"expert.review"</span>,
   <span class="k">"instructions"</span>: <span class="s">"Read the prompt and two answers in 'input'. Choose the more helpful, accurate answer and give one sentence why."</span>,
   <span class="k">"input"</span>: { <span class="k">"prompt"</span>: <span class="s">"…"</span>, <span class="k">"a"</span>: <span class="s">"…"</span>, <span class="k">"b"</span>: <span class="s">"…"</span> },
   <span class="k">"constraints"</span>: { <span class="k">"min_reputation"</span>: 4 },
